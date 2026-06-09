@@ -26,17 +26,21 @@ body {
 
 .globe {
     display: inline-block;
-    width: 0.9em;
-    height: 0.9em;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #00ffff, #0044ff);
-    box-shadow:
-        0 0 5px #00ffff,
-        0 0 10px #00ffff,
-        0 0 20px #00ffff;
-    animation: spin 3s linear infinite;
-    vertical-align: middle;
+    animation: spin 2.5s linear infinite;
+    filter: drop-shadow(0 0 10px #00ffff);
+    text-shadow:
+    0 0 5px #00ffff,
+    0 0 10px #00ffff,
+    0 0 20px #00ffff,
+    0 0 40px #00ffff;
+
 }
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
