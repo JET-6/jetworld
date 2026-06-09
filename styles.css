@@ -24,25 +24,9 @@ body {
     letter-spacing: 4px;
 }
 
-.globe {
+#globe-container {
     display: inline-block;
-    animation: spin 2.5s linear infinite;
-    filter: drop-shadow(0 0 10px #00ffff);
-    text-shadow:
-    0 0 5px #00ffff,
-    0 0 10px #00ffff,
-    0 0 20px #00ffff,
-    0 0 40px #00ffff;
-
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
 }
