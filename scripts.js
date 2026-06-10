@@ -18,8 +18,9 @@ const geometry = new THREE.SphereGeometry(1, 32, 32);
 // Texture
 const textureLoader = new THREE.TextureLoader();
 const texture = textureLoader.load(
-    "https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-dashboard-pro/assets/img/earth.jpg"
+    "https://threejs.org/examples/textures/earth_atmos_2048.jpg"
 );
+
 
 // Material
 const material = new THREE.MeshStandardMaterial({
