@@ -18,7 +18,7 @@ body {
     align-items: center;
     justify-content: center; /* optional, keeps it centered */
     gap: 0.1em; /* tiny spacing if needed */
-    font-size: 4rem; /* scale as you like */
+    font-size: 5rem; /* scale as you like */
     white-space: nowrap; /* still good to keep */    color: #ff00ff;
     text-shadow:
         0 0 5px #ff00ff,
@@ -29,7 +29,7 @@ body {
 }
 
 #globe-container canvas {
-    width: 1.4em;   /* adjust size */
-    height: 1.4em;
+    width: 1em;   /* adjust size */
+    height: 1em;
     display: block; /* IMPORTANT: prevents inline baseline weirdness */
 }
