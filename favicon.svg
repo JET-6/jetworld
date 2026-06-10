@@ -1,0 +1,34 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="neon">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Heart outline -->
+  <path d="M256 472
+           L80 280
+           C20 200 40 100 120 80
+           C180 70 220 110 256 150
+           C292 110 332 70 392 80
+           C472 100 492 200 432 280
+           L256 472 Z"
+        fill="none"
+        stroke="#ff0099"
+        stroke-width="28"
+        filter="url(#neon)"/>
+  <!-- Crack -->
+  <path d="M256 150
+           L250 210
+           L270 240
+           L240 280
+           L260 320
+           L245 360"
+        fill="none"
+        stroke="#ff33aa"
+        stroke-width="18"
+        filter="url(#neon)"/>
+</svg>
