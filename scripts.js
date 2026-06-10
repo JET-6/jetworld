@@ -79,4 +79,6 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-animate();
+setTimeout(() => {
+    animate();
+}, 1800); // matches globeBoot delay

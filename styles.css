@@ -13,6 +13,24 @@ body {
     text-align: center;
 }
 
+#boot-text {
+    position: absolute;
+    top: 10%;
+    width: 100%;
+    text-align: center;
+    color: #00ffff;
+    font-family: monospace;
+    opacity: 0;
+    animation: bootText 1.2s ease-out forwards;
+}
+
+@keyframes bootText {
+    0% { opacity: 0; }
+    40% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+
 .neon-title {
     display: flex;
     align-items: center;
@@ -32,4 +50,79 @@ body {
     width: 1em;   /* adjust size */
     height: 1em;
     display: block; /* IMPORTANT: prevents inline baseline weirdness */
+}
+
+/* Boot sequence container */
+.landing-container {
+    opacity: 0;
+    animation: bootFadeIn 0.8s ease-out forwards;
+    animation-delay: 0.2s;
+}
+
+/* Neon flicker for text */
+.neon-title {
+    opacity: 0;
+    animation: neonFlicker 2.2s ease-out forwards;
+    animation-delay: 0.6s;
+}
+
+/* Globe boot fade */
+#globe-container {
+    opacity: 0;
+    animation: globeBoot 1.8s ease-out forwards;
+    animation-delay: 1.8s;
+}
+
+/* Scanline sweep */
+body::before {
+    content: "";
+    position: fixed;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        rgba(0,255,255,0.15),
+        rgba(0,255,255,0)
+    );
+    pointer-events: none;
+    animation: scanline 1.6s ease-out forwards;
+    animation-delay: 1s;
+}
+
+/* Keyframes */
+@keyframes bootFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes neonFlicker {
+    0% { opacity: 0; text-shadow: none; }
+    10% { opacity: 1; }
+    18% { opacity: 0.4; }
+    25% { opacity: 1; }
+    32% { opacity: 0.2; }
+    40% { opacity: 1; }
+    55% { opacity: 0.7; }
+    70% { opacity: 1; }
+    100% {
+        opacity: 1;
+        text-shadow:
+            0 0 5px #ff00ff,
+            0 0 10px #ff00ff,
+            0 0 20px #ff00ff,
+            0 0 40px #ff00ff;
+    }
+}
+
+@keyframes globeBoot {
+    0% { opacity: 0; transform: scale(0.6); }
+    40% { opacity: 0.4; transform: scale(1.1); }
+    70% { opacity: 0.8; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes scanline {
+    0% { top: -100%; }
+    100% { top: 100%; }
 }
