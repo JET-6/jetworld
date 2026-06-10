@@ -29,11 +29,14 @@ const earthTexture = textureLoader.load(
     }
 );
 
-// Material
 const material = new THREE.MeshStandardMaterial({
     map: earthTexture,
-    emissive: 0x003333,
-    emissiveIntensity: 0.25
+    emissive: 0x00ffff,
+    emissiveIntensity: 1.2,
+    transparent: true,
+    opacity: 0.85,
+    metalness: 0.3,
+    roughness: 0.2
 });
 
 // Mesh
@@ -47,6 +50,10 @@ scene.add(pointLight);
 
 const ambientLight = new THREE.AmbientLight(0x404040, 1.5);
 scene.add(ambientLight);
+
+const holoLight = new THREE.AmbientLight(0x00ffff, 2.5);
+scene.add(holoLight);
+
 
 // Animation loop
 function animate() {
