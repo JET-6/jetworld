@@ -63,6 +63,21 @@ body::before,
     animation-play-state: running;
 }
 
+/* HIDE ALL BOOT ELEMENTS UNTIL TAP */
+.neon-title,
+#globe-container,
+#boot-text,
+body::before {
+    visibility: hidden;
+}
+
+.boot-active .neon-title,
+.boot-active #globe-container,
+.boot-active #boot-text,
+.boot-active body::before {
+    visibility: visible;
+}
+
 /* --------------------------------------------------
    INITIALIZER TEXT
 -------------------------------------------------- */
