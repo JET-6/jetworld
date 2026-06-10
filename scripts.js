@@ -16,20 +16,10 @@ container.appendChild(renderer.domElement);
 const geometry = new THREE.SphereGeometry(1, 32, 32);
 
 // Texture
-/* const textureLoader = new THREE.TextureLoader();
-const texture = textureLoader.load(
-    "https://threejs.org/examples/textures/earth_atmos_2048.jpg"
-); */
-
+const textureLoader = new THREE.TextureLoader();
 
 // Material
-const texture = textureLoader.load(
-    "https://threejs.org/examples/textures/earth_atmos_2048.jpg",
-    () => {
-        globe.material.map = texture;
-        globe.material.needsUpdate = true;
-    }
-);
+const texture = textureLoader.load("https://threejs.org/examples/textures/earth_atmos_2048.jpg")
 
 const material = new THREE.MeshStandardMaterial({
     map: texture,
@@ -40,6 +30,15 @@ const material = new THREE.MeshStandardMaterial({
 // Mesh
 const globe = new THREE.Mesh(geometry, material);
 scene.add(globe);
+
+// GLOBE
+textureLoader.load(
+    "https://threejs.org/examples/textures/earth_atmos_2048.jpg",
+    (loadedTexture) => {
+        globe.material.map = loadedTexture;
+        globe.material.needsUpdate = true;
+    }
+);
 
 // Light
 const light = new THREE.PointLight(0x00ffff, 1, 100);
