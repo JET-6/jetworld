@@ -29,23 +29,23 @@ const earthTexture = textureLoader.load(
     }
 );
 
-// Base hologram material
+// Base material (texture visible)
 const material = new THREE.MeshStandardMaterial({
     map: earthTexture,
     emissive: 0x00ffff,
-    emissiveIntensity: 1.5,
+    emissiveIntensity: 0.35,   // lower glow so texture shows
+    metalness: 0.0,
+    roughness: 0.9,            // softer, more matte = more texture
     transparent: true,
-    opacity: 0.8,
-    metalness: 0.1,
-    roughness: 0.3
+    opacity: 0.95
 });
 
-// Wireframe overlay
+// Wireframe overlay (subtle)
 const wireMaterial = new THREE.MeshBasicMaterial({
     color: 0x00ffff,
     wireframe: true,
     transparent: true,
-    opacity: 0.25
+    opacity: 0.15              // lower so it doesn't overpower
 });
 
 // Meshes
