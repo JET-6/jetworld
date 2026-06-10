@@ -57,7 +57,7 @@ scene.add(wireframe);
 
 // Lighting
 scene.add(new THREE.AmbientLight(0x00ffff, 2.5));
-
+/*
 // Lights
 const pointLight = new THREE.PointLight(0x00ffff, 1, 100);
 pointLight.position.set(5, 3, 5);
@@ -65,7 +65,7 @@ scene.add(pointLight);
 
 const ambientLight = new THREE.AmbientLight(0x404040, 1.5);
 scene.add(ambientLight);
-
+*/
 const holoLight = new THREE.AmbientLight(0x00ffff, 2.5);
 scene.add(holoLight);
 
