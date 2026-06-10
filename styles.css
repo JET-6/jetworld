@@ -21,11 +21,12 @@ body {
     color: #00ffff;
     font-family: monospace;
     opacity: 0;
-    animation: bootText 1.2s ease-out forwards;
+    animation: bootText 2.2s ease-out forwards;
 }
 
 @keyframes bootText {
     0% { opacity: 0; }
+    20% { opacity: 1; }
     40% { opacity: 1; }
     100% { opacity: 0; }
 }
@@ -63,14 +64,14 @@ body {
 .neon-title {
     opacity: 0;
     animation: neonFlicker 2.2s ease-out forwards;
-    animation-delay: 0.6s;
+    animation-delay: 2.2s;
 }
 
 /* Globe boot fade */
 #globe-container {
     opacity: 0;
     animation: globeBoot 1.8s ease-out forwards;
-    animation-delay: 1.8s;
+    animation-delay: 3.4s;
 }
 
 /* Scanline sweep */
@@ -87,7 +88,7 @@ body::before {
     );
     pointer-events: none;
     animation: scanline 1.6s ease-out forwards;
-    animation-delay: 1s;
+    animation-delay: 2.4s;
 }
 
 /* Keyframes */

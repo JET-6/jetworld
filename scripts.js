@@ -81,4 +81,4 @@ function animate() {
 
 setTimeout(() => {
     animate();
-}, 1800); // matches globeBoot delay
+}, 3400); // matches globeBoot delay
