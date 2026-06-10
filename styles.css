@@ -24,9 +24,7 @@ body {
     letter-spacing: 4px;
 }
 
-#globe-container {
-    display: inline-block;
+#globe-container canvas {
     width: 1em;
     height: 1em;
-    vertical-align: middle;
 }
