@@ -29,19 +29,34 @@ const earthTexture = textureLoader.load(
     }
 );
 
+// Base hologram material
 const material = new THREE.MeshStandardMaterial({
     map: earthTexture,
     emissive: 0x00ffff,
-    emissiveIntensity: 1.2,
+    emissiveIntensity: 1.5,
     transparent: true,
-    opacity: 0.85,
-    metalness: 0.3,
-    roughness: 0.2
+    opacity: 0.8,
+    metalness: 0.1,
+    roughness: 0.3
 });
 
-// Mesh
+// Wireframe overlay
+const wireMaterial = new THREE.MeshBasicMaterial({
+    color: 0x00ffff,
+    wireframe: true,
+    transparent: true,
+    opacity: 0.25
+});
+
+// Meshes
 const globe = new THREE.Mesh(geometry, material);
+const wireframe = new THREE.Mesh(geometry, wireMaterial);
+
 scene.add(globe);
+scene.add(wireframe);
+
+// Lighting
+scene.add(new THREE.AmbientLight(0x00ffff, 2.5));
 
 // Lights
 const pointLight = new THREE.PointLight(0x00ffff, 1, 100);
