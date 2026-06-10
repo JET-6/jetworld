@@ -16,17 +16,26 @@ container.appendChild(renderer.domElement);
 const geometry = new THREE.SphereGeometry(1, 32, 32);
 
 // Texture
-const textureLoader = new THREE.TextureLoader();
+/* const textureLoader = new THREE.TextureLoader();
 const texture = textureLoader.load(
     "https://threejs.org/examples/textures/earth_atmos_2048.jpg"
-);
+); */
 
 
 // Material
+const textureLoader = new THREE.TextureLoader();
+const texture = textureLoader.load(
+    "https://threejs.org/examples/textures/earth_atmos_2048.jpg",
+    () => {
+        globe.material.map = texture;
+        globe.material.needsUpdate = true;
+    }
+);
+
 const material = new THREE.MeshStandardMaterial({
-    color: 0x00ffff,
-    emissive: 0x00ffff,
-    emissiveIntensity: 0.5
+    map: texture,
+    emissive: new THREE.Color(0x00ffff),
+    emissiveIntensity: 0.25
 });
 
 // Mesh
