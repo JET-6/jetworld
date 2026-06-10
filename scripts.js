@@ -1,4 +1,4 @@
-// JETWORLD 3D globe
+// JETWORLD 3D Globe
 
 const container = document.getElementById("globe-container");
 
@@ -11,18 +11,25 @@ camera.position.z = 3.5;
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-renderer.setSize(128, 128);
+renderer.setSize(256, 256);
 container.appendChild(renderer.domElement);
 
 // Geometry
 const geometry = new THREE.SphereGeometry(1, 32, 32);
 
-// Texture + material
+// Texture loader
 const textureLoader = new THREE.TextureLoader();
+
+// Load Earth texture
 const earthTexture = textureLoader.load(
-    "https://raw.githubusercontent.com/turban/webgl-earth/master/images/earth.jpg"
+    "https://raw.githubusercontent.com/turban/webgl-earth/master/images/earth.jpg",
+    () => {
+        globe.material.map = earthTexture;
+        globe.material.needsUpdate = true;
+    }
 );
 
+// Material
 const material = new THREE.MeshStandardMaterial({
     map: earthTexture,
     emissive: 0x003333,
