@@ -1,3 +1,6 @@
+/* --------------------------------------------------
+   BASE LAYOUT
+-------------------------------------------------- */
 body {
     margin: 0;
     padding: 0;
@@ -7,21 +10,12 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    position: relative;
 }
 
-/* Mobile responsiveness */
-@media (max-width: 400px) {
-    .neon-title {
-        font-size: 2.2rem; /* scale down for mobile */
-        gap: 0.05em;       /* tighten spacing */
-    }
-
-    #globe-container canvas {
-        width: 1.1em;      /* smaller globe */
-        height: 1.1em;
-    }
-}
-
+/* --------------------------------------------------
+   TAP TO ENTER (MOBILE ONLY)
+-------------------------------------------------- */
 #tap-to-enter {
     display: none;
     position: absolute;
@@ -41,42 +35,37 @@ body {
     100% { opacity: 0.2; }
 }
 
-/* Mobile only */
 @media (max-width: 600px) {
     #tap-to-enter {
         display: block;
     }
 
     .landing-container {
-        opacity: 0; /* hide JETWORLD until tap */
+        opacity: 0;
         pointer-events: none;
     }
 }
 
+/* --------------------------------------------------
+   PAUSE ALL ANIMATIONS UNTIL TAP
+-------------------------------------------------- */
 .neon-title,
 #globe-container,
-body::before {
-    animation-play-state: paused; /* pause all animations by default */
-}
-
-.boot-active .neon-title,
-.boot-active #globe-container,
-.boot-active body::before {
-    animation-play-state: running;
-}
-
+body::before,
 #boot-text {
     animation-play-state: paused;
 }
 
+.boot-active .neon-title,
+.boot-active #globe-container,
+.boot-active body::before,
 .boot-active #boot-text {
     animation-play-state: running;
 }
 
-.landing-container {
-    text-align: center;
-}
-
+/* --------------------------------------------------
+   INITIALIZER TEXT
+-------------------------------------------------- */
 #boot-text {
     position: absolute;
     top: 10%;
@@ -91,104 +80,31 @@ body::before {
 @keyframes bootText {
     0% { opacity: 0; }
     20% { opacity: 1; }
-    40% { opacity: 1; }
+    80% { opacity: 1; }
     100% { opacity: 0; }
 }
 
-
-.neon-title {
-    display: flex;
-    align-items: center;
-    justify-content: center; /* optional, keeps it centered */
-    gap: 0.1em; /* tiny spacing if needed */
-    font-size: clamp(2rem, 8vw, 4.5rem); /* scale as you like */
-    white-space: nowrap; /* still good to keep */    color: #ff00ff;
-    text-shadow:
-        0 0 5px #ff00ff,
-        0 0 10px #ff00ff,
-        0 0 20px #ff00ff,
-        0 0 40px #ff00ff;
-    letter-spacing: 4px;
-    transform-origin: center;
-}
-
-#globe-container canvas {
-    width: clamp(0.9em, 1.2em + 1vw, 1.4em);
-    height: clamp(0.9em, 1.2em + 1vw, 1.4em);
-    display: block; /* IMPORTANT: prevents inline baseline weirdness */
-}
-
-/* Boot sequence container */
+/* --------------------------------------------------
+   LANDING CONTAINER
+-------------------------------------------------- */
 .landing-container {
+    text-align: center;
     opacity: 0;
     animation: bootFadeIn 0.8s ease-out forwards;
     animation-delay: 0.2s;
 }
 
-/* Neon flicker for text */
-.neon-title {
-    opacity: 0;
-    animation: neonFlicker 2.2s ease-out forwards;
-    animation-delay: 2.2s;
-}
-
-/* Globe boot fade */
-#globe-container {
-    opacity: 0;
-    animation: globeBoot 1.8s ease-out forwards;
-    animation-delay: 3.4s;
-}
-
-/* Scanline sweep */
-body::before {
-    content: "";
-    position: fixed;
-    top: -100%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        rgba(0,255,255,0.15),
-        rgba(0,255,255,0)
-    );
-    pointer-events: none;
-    animation: scanline 1.6s ease-out forwards;
-    animation-delay: 2.4s;
-}
-
-/* Keyframes */
 @keyframes bootFadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
 
-@keyframes neonFlicker {
-    0% { opacity: 0; text-shadow: none; }
-    10% { opacity: 1; }
-    18% { opacity: 0.4; }
-    25% { opacity: 1; }
-    32% { opacity: 0.2; }
-    40% { opacity: 1; }
-    55% { opacity: 0.7; }
-    70% { opacity: 1; }
-    100% {
-        opacity: 1;
-        text-shadow:
-            0 0 5px #ff00ff,
-            0 0 10px #ff00ff,
-            0 0 20px #ff00ff,
-            0 0 40px #ff00ff;
-    }
-}
-
-@keyframes globeBoot {
-    0% { opacity: 0; transform: scale(0.6); }
-    40% { opacity: 0.4; transform: scale(1.1); }
-    70% { opacity: 0.8; transform: scale(0.95); }
-    100% { opacity: 1; transform: scale(1); }
-}
-
-@keyframes scanline {
-    0% { top: -100%; }
-    100% { top: 100%; }
-}
+/* --------------------------------------------------
+   JETWORLD TITLE
+-------------------------------------------------- */
+.neon-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.1em;
+    font-size:

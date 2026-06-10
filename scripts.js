@@ -1,22 +1,42 @@
-if (window.innerWidth < 600) {
+/* --------------------------------------------------
+   MOBILE TAP-TO-ENTER GATE
+-------------------------------------------------- */
+
+let bootTriggered = false;
+
+function startBootSequence() {
+    if (bootTriggered) return;
+    bootTriggered = true;
+
+    // Hide tap prompt
     const tap = document.getElementById("tap-to-enter");
+    tap.style.display = "none";
+
+    // Allow animations to run
+    document.body.classList.add("boot-active");
+
+    // Reveal landing container
     const landing = document.querySelector(".landing-container");
+    landing.style.opacity = "1";
+    landing.style.pointerEvents = "auto";
 
-    tap.addEventListener("click", () => {
-        tap.style.display = "none";
-
-        // Allow animations to run
-        document.body.classList.add("boot-active");
-
-        // Show the landing container
-        landing.style.opacity = "1";
-        landing.style.pointerEvents = "auto";
-    });
+    // Start the globe animation AFTER the CSS boot timing
+    setTimeout(() => {
+        animate();
+    }, 3400);
 }
 
+if (window.innerWidth < 600) {
+    const tap = document.getElementById("tap-to-enter");
+    tap.addEventListener("click", startBootSequence);
+} else {
+    // Desktop: start immediately
+    startBootSequence();
+}
 
-
-// JETWORLD 3D Globe
+/* --------------------------------------------------
+   JETWORLD 3D GLOBE
+-------------------------------------------------- */
 
 const container = document.getElementById("globe-container");
 
@@ -38,22 +58,12 @@ const geometry = new THREE.SphereGeometry(1, 32, 32);
 // Texture loader
 const textureLoader = new THREE.TextureLoader();
 
-// Load Earth texture
-const earthTexture = textureLoader.load(
-    "earth.jpg",
-    () => {
-        globe.material.map = earthTexture;
-        globe.material.needsUpdate = true;
-    }
-);
-
 // Base material (texture visible)
 const material = new THREE.MeshStandardMaterial({
-    map: earthTexture,
     emissive: 0x00ffff,
-    emissiveIntensity: 0.35,   // lower glow so texture shows
+    emissiveIntensity: 0.35,
     metalness: 0.0,
-    roughness: 0.9,            // softer, more matte = more texture
+    roughness: 0.9,
     transparent: true,
     opacity: 0.95
 });
@@ -63,7 +73,7 @@ const wireMaterial = new THREE.MeshBasicMaterial({
     color: 0x00ffff,
     wireframe: true,
     transparent: true,
-    opacity: 0.15              // lower so it doesn't overpower
+    opacity: 0.15
 });
 
 // Meshes
@@ -73,22 +83,18 @@ const wireframe = new THREE.Mesh(geometry, wireMaterial);
 scene.add(globe);
 scene.add(wireframe);
 
+// Load Earth texture AFTER globe exists
+textureLoader.load("earth.jpg", (earthTexture) => {
+    material.map = earthTexture;
+    material.needsUpdate = true;
+});
+
 // Lighting
-
-/* scene.add(new THREE.AmbientLight(0x00ffff, 2.5)); */
-
-// Lights
-
-/* const pointLight = new THREE.PointLight(0x00ffff, 1, 100);
-pointLight.position.set(5, 3, 5);
-scene.add(pointLight); */
-
 const ambientLight = new THREE.AmbientLight(0x404040, 1.5);
 scene.add(ambientLight);
 
 const holoLight = new THREE.AmbientLight(0x00ffff, 2.5);
 scene.add(holoLight);
-
 
 // Animation loop
 function animate() {
@@ -96,7 +102,3 @@ function animate() {
     globe.rotation.y += 0.003;
     renderer.render(scene, camera);
 }
-
-setTimeout(() => {
-    animate();
-}, 3400); // matches globeBoot delay
