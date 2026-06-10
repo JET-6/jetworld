@@ -22,7 +22,7 @@ const textureLoader = new THREE.TextureLoader();
 
 // Load Earth texture
 const earthTexture = textureLoader.load(
-    "https://raw.githubusercontent.com/turban/webgl-earth/master/images/earth.jpg",
+    "earth.jpg",
     () => {
         globe.material.map = earthTexture;
         globe.material.needsUpdate = true;
