@@ -5,7 +5,7 @@ const scene = new THREE.Scene();
 
 // Camera
 const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 1000);
-camera.position.z = 4;
+camera.position.z = 3.5;
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -23,7 +23,6 @@ const texture = textureLoader.load(
 
 
 // Material
-const textureLoader = new THREE.TextureLoader();
 const texture = textureLoader.load(
     "https://threejs.org/examples/textures/earth_atmos_2048.jpg",
     () => {
@@ -34,8 +33,8 @@ const texture = textureLoader.load(
 
 const material = new THREE.MeshStandardMaterial({
     map: texture,
-    emissive: new THREE.Color(0x00ffff),
-    emissiveIntensity: 0.25
+    emissive: 0x003333,
+    emissiveIntensity: 0.2
 });
 
 // Mesh
@@ -46,6 +45,10 @@ scene.add(globe);
 const light = new THREE.PointLight(0x00ffff, 1, 100);
 light.position.set(5, 3, 5);
 scene.add(light);
+
+const ambient = new THREE.AmbientLight(0x404040, 1.5);
+scene.add(ambient);
+
 
 // Animation
 function animate() {
