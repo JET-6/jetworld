@@ -22,6 +22,37 @@ body {
     }
 }
 
+#tap-to-enter {
+    display: none;
+    position: absolute;
+    top: 45%;
+    width: 100%;
+    text-align: center;
+    font-size: 1.4rem;
+    color: #00ffff;
+    font-family: monospace;
+    opacity: 0;
+    animation: tapPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes tapPulse {
+    0% { opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { opacity: 0.2; }
+}
+
+/* Mobile only */
+@media (max-width: 600px) {
+    #tap-to-enter {
+        display: block;
+    }
+
+    .landing-container {
+        opacity: 0; /* hide JETWORLD until tap */
+        pointer-events: none;
+    }
+}
+
 
 .landing-container {
     text-align: center;
@@ -51,7 +82,7 @@ body {
     align-items: center;
     justify-content: center; /* optional, keeps it centered */
     gap: 0.1em; /* tiny spacing if needed */
-    font-size: 5rem; /* scale as you like */
+    font-size: clamp(2rem, 8vw, 4.5rem); /* scale as you like */
     white-space: nowrap; /* still good to keep */    color: #ff00ff;
     text-shadow:
         0 0 5px #ff00ff,
@@ -59,11 +90,12 @@ body {
         0 0 20px #ff00ff,
         0 0 40px #ff00ff;
     letter-spacing: 4px;
+    transform-origin: center;
 }
 
 #globe-container canvas {
-    width: 1em;   /* adjust size */
-    height: 1em;
+    width: clamp(0.9em, 1.2em + 1vw, 1.4em);
+    height: clamp(0.9em, 1.2em + 1vw, 1.4em);
     display: block; /* IMPORTANT: prevents inline baseline weirdness */
 }
 

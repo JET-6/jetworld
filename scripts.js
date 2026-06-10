@@ -1,3 +1,15 @@
+if (window.innerWidth < 600) {
+    const tap = document.getElementById("tap-to-enter");
+    const landing = document.querySelector(".landing-container");
+
+    tap.addEventListener("click", () => {
+        tap.style.display = "none";
+        landing.style.opacity = "1";
+        landing.style.pointerEvents = "auto";
+    });
+}
+
+
 // JETWORLD 3D Globe
 
 const container = document.getElementById("globe-container");
