@@ -23,9 +23,9 @@ const texture = textureLoader.load(
 
 // Material
 const material = new THREE.MeshStandardMaterial({
-    map: texture,
-    emissive: new THREE.Color(0x00ffff),
-    emissiveIntensity: 0.3
+    color: 0x00ffff,
+    emissive: 0x00ffff,
+    emissiveIntensity: 0.5
 });
 
 // Mesh
