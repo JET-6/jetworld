@@ -9,6 +9,20 @@ body {
     height: 100vh;
 }
 
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .neon-title {
+        font-size: 2.2rem; /* scale down for mobile */
+        gap: 0.05em;       /* tighten spacing */
+    }
+
+    #globe-container canvas {
+        width: 1.1em;      /* smaller globe */
+        height: 1.1em;
+    }
+}
+
+
 .landing-container {
     text-align: center;
 }
