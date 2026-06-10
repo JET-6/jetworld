@@ -1,3 +1,5 @@
+// JETWORLD 3D globe
+
 const container = document.getElementById("globe-container");
 
 // Scene
@@ -9,47 +11,37 @@ camera.position.z = 3.5;
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-renderer.setSize(128, 128); // safer size
+renderer.setSize(128, 128);
 container.appendChild(renderer.domElement);
 
 // Geometry
 const geometry = new THREE.SphereGeometry(1, 32, 32);
 
-// Texture
+// Texture + material
 const textureLoader = new THREE.TextureLoader();
-
-// Material
-const texture = textureLoader.load("https://threejs.org/examples/textures/earth_atmos_2048.jpg")
+const earthTexture = textureLoader.load(
+    "https://threejs.org/examples/textures/earth_atmos_2048.jpg"
+);
 
 const material = new THREE.MeshStandardMaterial({
-    map: texture,
+    map: earthTexture,
     emissive: 0x003333,
-    emissiveIntensity: 0.2
+    emissiveIntensity: 0.25
 });
 
 // Mesh
 const globe = new THREE.Mesh(geometry, material);
 scene.add(globe);
 
-// GLOBE
-textureLoader.load(
-    "https://threejs.org/examples/textures/earth_atmos_2048.jpg",
-    (loadedTexture) => {
-        globe.material.map = loadedTexture;
-        globe.material.needsUpdate = true;
-    }
-);
+// Lights
+const pointLight = new THREE.PointLight(0x00ffff, 1, 100);
+pointLight.position.set(5, 3, 5);
+scene.add(pointLight);
 
-// Light
-const light = new THREE.PointLight(0x00ffff, 1, 100);
-light.position.set(5, 3, 5);
-scene.add(light);
+const ambientLight = new THREE.AmbientLight(0x404040, 1.5);
+scene.add(ambientLight);
 
-const ambient = new THREE.AmbientLight(0x404040, 1.5);
-scene.add(ambient);
-
-
-// Animation
+// Animation loop
 function animate() {
     requestAnimationFrame(animate);
     globe.rotation.y += 0.003;
