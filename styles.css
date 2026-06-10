@@ -14,7 +14,8 @@ body {
 }
 
 .neon-title {
-    font-size: 4rem;
+    font-size: 5rem;
+    white-space: nowrap;    
     color: #ff00ff;
     text-shadow:
         0 0 5px #ff00ff,
@@ -22,7 +23,6 @@ body {
         0 0 20px #ff00ff,
         0 0 40px #ff00ff;
     letter-spacing: 4px;
-    white-space: nowrap;
 }
 
 #globe-container canvas {
