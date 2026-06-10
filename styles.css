@@ -10,7 +10,7 @@ body {
 }
 
 /* Mobile responsiveness */
-@media (max-width: 600px) {
+@media (max-width: 400px) {
     .neon-title {
         font-size: 2.2rem; /* scale down for mobile */
         gap: 0.05em;       /* tighten spacing */
