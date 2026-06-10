@@ -14,9 +14,12 @@ body {
 }
 
 .neon-title {
-    font-size: 5rem;
-    white-space: nowrap;    
-    color: #ff00ff;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* optional, keeps it centered */
+    gap: 0.1em; /* tiny spacing if needed */
+    font-size: 4rem; /* scale as you like */
+    white-space: nowrap; /* still good to keep */    color: #ff00ff;
     text-shadow:
         0 0 5px #ff00ff,
         0 0 10px #ff00ff,
@@ -26,8 +29,7 @@ body {
 }
 
 #globe-container canvas {
-    width: 1em;
-    height: 1em;
-    display: inline-block;
-    vertical-align: middle;
+    width: 1.4em;   /* adjust size */
+    height: 1.4em;
+    display: block; /* IMPORTANT: prevents inline baseline weirdness */
 }
