@@ -53,6 +53,25 @@ body {
     }
 }
 
+.neon-title,
+#globe-container,
+body::before {
+    animation-play-state: paused; /* pause all animations by default */
+}
+
+.boot-active .neon-title,
+.boot-active #globe-container,
+.boot-active body::before {
+    animation-play-state: running;
+}
+
+#boot-text {
+    animation-play-state: paused;
+}
+
+.boot-active #boot-text {
+    animation-play-state: running;
+}
 
 .landing-container {
     text-align: center;

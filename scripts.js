@@ -4,10 +4,16 @@ if (window.innerWidth < 600) {
 
     tap.addEventListener("click", () => {
         tap.style.display = "none";
+
+        // Allow animations to run
+        document.body.classList.add("boot-active");
+
+        // Show the landing container
         landing.style.opacity = "1";
         landing.style.pointerEvents = "auto";
     });
 }
+
 
 
 // JETWORLD 3D Globe
