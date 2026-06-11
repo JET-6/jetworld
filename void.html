@@ -3,119 +3,157 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Browser jetzheart -->
-    <link rel="icon" type="image/png" href="https://jet-6.github.io/wadayawant/jetzheart.png">
-
-    <!-- iOS share preview icon -->
-    <link rel="apple-touch-icon" href="https://jet-6.github.io/wadayawant/jetzheart.png">
-
-    <!-- Open Graph -->
-    <meta property="og:image" content="https://jet-6.github.io/wadayawant/jetzheart.png">
-    <meta property="og:title" content="JETWORLD">
-    <meta property="og:description" content="Enter the neon hologram terminal.">
-    <meta property="og:url" content="https://jet-6.github.io/wadayawant/">
-    <meta property="og:type" content="website">
-
-    <!-- Twitter/X -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:image" content="https://jet-6.github.io/wadayawant/jetzheart.png">
 
 <title>THE VOID</title>
 
 <style>
-    /* --------------------------------------------------
-       VOID BACKGROUND — pulsing hologram fog
-    -------------------------------------------------- */
-    body {
-        margin: 0;
-        background: #000;
-        height: 100vh;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: "VT323", monospace;
-        color: #00ff66;
-        letter-spacing: 0.05em;
-        animation: voidPulse 6s ease-in-out infinite;
-        background: radial-gradient(circle at center,
-            rgba(40,40,40,0.15) 0%,
-            rgba(0,0,0,1) 80%
-        );
-        background-size: 200% 200%;
-    }
+/* --------------------------------------------------
+   VOID BACKGROUND — pulsing hologram fog
+-------------------------------------------------- */
+body {
+    margin: 0;
+    background: #000;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "VT323", monospace;
+    color: #00ff66;
+    letter-spacing: 0.05em;
+    animation: voidPulse 6s ease-in-out infinite;
+    background: radial-gradient(circle at center,
+        rgba(40,40,40,0.15) 0%,
+        rgba(0,0,0,1) 80%
+    );
+    background-size: 200% 200%;
+}
 
-    @keyframes voidPulse {
-        0%   { background-size: 200% 200%; opacity: 0.95; }
-        50%  { background-size: 230% 230%; opacity: 1; }
-        100% { background-size: 200% 200%; opacity: 0.95; }
-    }
+@keyframes voidPulse {
+    0%   { background-size: 200% 200%; opacity: 0.95; }
+    50%  { background-size: 230% 230%; opacity: 1; }
+    100% { background-size: 200% 200%; opacity: 0.95; }
+}
 
-    /* Subtle shimmer noise overlay */
-    body::after {
-        content: "";
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        background: url('https://grainy-gradients.vercel.app/noise.svg');
-        opacity: 0.08;
-        animation: noisePulse 4s infinite alternate;
-    }
+/* Subtle shimmer noise overlay */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: url('https://grainy-gradients.vercel.app/noise.svg');
+    opacity: 0.08;
+    animation: noisePulse 4s infinite alternate;
+}
 
-    @keyframes noisePulse {
-        from { opacity: 0.04; }
-        to   { opacity: 0.10; }
-    }
+@keyframes noisePulse {
+    from { opacity: 0.04; }
+    to   { opacity: 0.10; }
+}
 
-    /* --------------------------------------------------
-       TERMINAL TEXT
-    -------------------------------------------------- */
-    #terminal {
-        display:block;
-        font-size: 1.2rem;
-        max-width: 90%;
-        white-space: pre-wrap;
-        line-height: 1.4;
+/* --------------------------------------------------
+   TERMINAL TEXT
+-------------------------------------------------- */
+#terminal-wrapper {
+    display: block;
+    width: 100%;
+    max-width: 90%;
+}
+
+#terminal {
+    display: block;
+    font-size: 1.2rem;
+    white-space: pre-wrap;
+    line-height: 1.4;
+    opacity: 0;
+    animation: fadeIn 2s ease-out forwards;
+    animation-delay: 1.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Blinking cursor */
+#cursor {
+    display: inline-block;
+    width: 12px;
+    height: 1.2rem;
+    background: #00ff66;
+    margin-left: 4px;
+    animation: blink 1.2s infinite;
+    opacity: 0;
+    animation-delay: 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%,100% { opacity: 0; }
+}
+
+/* --------------------------------------------------
+   CRT distortion ripple
+-------------------------------------------------- */
+@keyframes crtRipple {
+    0%   { transform: scale(1) skew(0deg); filter: blur(0px); }
+    20%  { transform: scale(1.02) skew(0.5deg); filter: blur(1px); }
+    40%  { transform: scale(0.98) skew(-0.3deg); filter: blur(0.5px); }
+    60%  { transform: scale(1.01) skew(0.2deg); filter: blur(0.8px); }
+    100% { transform: scale(1) skew(0deg); filter: blur(0px); }
+}
+
+.hidden-message {
+    animation: crtRipple 0.8s ease-out;
+}
+
+/* --------------------------------------------------
+   Glitch-fade animation for hidden lines
+-------------------------------------------------- */
+@keyframes glitchFade {
+    0% {
         opacity: 0;
-        animation: fadeIn 2s ease-out forwards;
-        animation-delay: 1.5s;
+        transform: translateX(0);
+        text-shadow: 0 0 0px #00ff66;
     }
-
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to   { opacity: 1; }
+    20% {
+        opacity: 1;
+        transform: translateX(-2px);
+        text-shadow: -2px 0 #00ff66;
     }
-
-    /* Blinking cursor */
-    #cursor {
-        display: inline-block;
-        width: 12px;
-        height: 1.2rem;
-        background: #00ff66;
-        margin-left: 4px;
-        animation: blink 1.2s infinite;
-        opacity: 0;
-        animation-delay: 2s;
-        animation-fill-mode: forwards;
+    40% {
+        transform: translateX(2px);
+        text-shadow: 2px 0 #00ff66;
     }
-
-    @keyframes blink {
-        0%, 50% { opacity: 1; }
-        51%,100% { opacity: 0; }
+    60% {
+        transform: translateX(-1px);
+        text-shadow: -1px 0 #00ff66;
     }
-
-    
+    80% {
+        transform: translateX(1px);
+        text-shadow: 1px 0 #00ff66;
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+        text-shadow: 0 0 6px #00ff66;
+    }
+}
 </style>
 </head>
 
 <body>
 
-<div id="terminal"></div>
-<div id="cursor"></div>
+<div id="terminal-wrapper">
+    <div id="terminal"></div>
+    <div id="cursor"></div>
+</div>
 
 <script>
-    /*GLITCH MODE */
-    // Glitch characters for distortion
+/* --------------------------------------------------
+   GLITCH MODE
+-------------------------------------------------- */
 const glitchChars = ["#", "%", "&", "@", "?", "!", "§", "¤", "▓", "░"];
 
 /* --------------------------------------------------
@@ -141,8 +179,8 @@ const script = [
 -------------------------------------------------- */
 let line = 0;
 let char = 0;
-const speed = 70;       // slow typing
-const linePause = 900;  // pause between lines
+const speed = 70;
+const linePause = 900;
 
 function typeLine() {
     const terminal = document.getElementById("terminal");
@@ -150,7 +188,6 @@ function typeLine() {
     if (line < script.length) {
         if (char < script[line].length) {
 
-            // 2% chance of glitch
             const isGlitch = Math.random() < 0.02;
             const realChar = script[line][char];
             const glitchChar = glitchChars[Math.floor(Math.random() * glitchChars.length)];
@@ -171,13 +208,11 @@ function typeLine() {
     }
 }
 
-
-/* Start typing after boot delay */
 setTimeout(typeLine, 2000);
 
 /* --------------------------------------------------
-   HIDDEN MESSAGE REVEAL — after script finishes    
-   ---------------------------------------------------- */
+   HIDDEN MESSAGE REVEAL — glitch-fade + CRT ripple
+-------------------------------------------------- */
 function revealHiddenMessage() {
     const cursor = document.getElementById("cursor");
     cursor.style.display = "none";
@@ -199,25 +234,17 @@ function revealHiddenMessage() {
     container.style.letterSpacing = "0.08em";
     container.style.color = "#00ff66";
 
-    // Insert underneath the terminal
-    document.getElementById("terminal").insertAdjacentElement("afterend", container);
+    document.getElementById("terminal-wrapper").insertAdjacentElement("afterend", container);
 
-    // Staggered reveal
     lines.forEach((text, i) => {
         const line = document.createElement("div");
         line.textContent = text;
         line.style.opacity = "0";
-        line.style.transition = "opacity 2.2s ease-out";
+        line.style.animation = `glitchFade 1.8s ease-out forwards`;
+        line.style.animationDelay = `${0.8 + i * 1.2}s`;
         container.appendChild(line);
-
-        setTimeout(() => {
-            line.style.opacity = "1";
-        }, 800 + i * 1200);
     });
 }
-
-
-
 </script>
 
 </body>
