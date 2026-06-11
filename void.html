@@ -71,6 +71,7 @@
        TERMINAL TEXT
     -------------------------------------------------- */
     #terminal {
+        display:block;
         font-size: 1.2rem;
         max-width: 90%;
         white-space: pre-wrap;
@@ -102,6 +103,8 @@
         0%, 50% { opacity: 1; }
         51%,100% { opacity: 0; }
     }
+
+    
 </style>
 </head>
 
@@ -187,6 +190,7 @@ function revealHiddenMessage() {
     ];
 
     const container = document.createElement("div");
+    container.classList.add("hidden-message");
     container.style.marginTop = "2rem";
     container.style.display = "flex";
     container.style.flexDirection = "column";
@@ -194,7 +198,6 @@ function revealHiddenMessage() {
     container.style.fontSize = "1.3rem";
     container.style.letterSpacing = "0.08em";
     container.style.color = "#00ff66";
-    container.style.opacity = "1";
 
     // Insert underneath the terminal
     document.getElementById("terminal").insertAdjacentElement("afterend", container);
@@ -209,9 +212,10 @@ function revealHiddenMessage() {
 
         setTimeout(() => {
             line.style.opacity = "1";
-        }, 800 + i * 1200); // stagger each line
+        }, 800 + i * 1200);
     });
 }
+
 
 
 </script>
