@@ -102,3 +102,23 @@ function animate() {
     globe.rotation.y += 0.003;
     renderer.render(scene, camera);
 }
+
+// Shutdown sequence
+function shutdownJETWORLD() {
+  const overlay = document.getElementById('shutdown-overlay');
+  overlay.classList.add('shutdown-active');
+
+  // Optional: fade out audio, stop animation loop, etc.
+}
+globeContainer.addEventListener('click', () => {
+  shutdownJETWORLD();
+});
+
+/* IF WE WANT TO REDIRECT OR LEAD INTO SOMETHING ELSE
+globeContainer.addEventListener('click', () => {
+  shutdownJETWORLD();
+  setTimeout(() => {
+    window.location.href = "nextpage.html";
+  }, 1800); // matches animation duration
+});
+*/
