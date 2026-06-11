@@ -77,11 +77,11 @@ body::after {
 
 /* Blinking cursor */
 #cursor {
-    display: inline-block;
+    display: block;       /* forces stacking */
     width: 12px;
     height: 1.2rem;
     background: #00ff66;
-    margin-left: 4px;
+    margin-top: 0.2rem;
     animation: blink 1.2s infinite;
     opacity: 0;
     animation-delay: 2s;
@@ -94,51 +94,24 @@ body::after {
 }
 
 /* --------------------------------------------------
-   CRT distortion ripple
+   Soft hidden message reveal
 -------------------------------------------------- */
-@keyframes crtRipple {
-    0%   { transform: scale(1) skew(0deg); filter: blur(0px); }
-    20%  { transform: scale(1.02) skew(0.5deg); filter: blur(1px); }
-    40%  { transform: scale(0.98) skew(-0.3deg); filter: blur(0.5px); }
-    60%  { transform: scale(1.01) skew(0.2deg); filter: blur(0.8px); }
-    100% { transform: scale(1) skew(0deg); filter: blur(0px); }
-}
-
-.hidden-message {
-    animation: crtRipple 0.2s ease-out;
-}
-
-/* --------------------------------------------------
-   Glitch-fade animation for hidden lines
--------------------------------------------------- */
-@keyframes glitchFade {
+@keyframes softReveal {
     0% {
         opacity: 0;
-        transform: translateX(0);
-        text-shadow: 0 0 0px #00ff66;
-    }
-    20% {
-        opacity: 1;
-        transform: translateX(-2px);
-        text-shadow: -2px 0 #00ff66;
-    }
-    40% {
-        transform: translateX(2px);
-        text-shadow: 2px 0 #00ff66;
-    }
-    60% {
-        transform: translateX(-1px);
-        text-shadow: -1px 0 #00ff66;
-    }
-    80% {
-        transform: translateX(1px);
-        text-shadow: 1px 0 #00ff66;
+        transform: translateY(6px);
+        text-shadow: none;
     }
     100% {
         opacity: 1;
-        transform: translateX(0);
+        transform: translateY(0);
         text-shadow: 0 0 6px #00ff66;
     }
+}
+
+.hidden-message-line {
+    opacity: 0;
+    animation: softReveal 1.8s ease-out forwards;
 }
 </style>
 </head>
@@ -211,7 +184,7 @@ function typeLine() {
 setTimeout(typeLine, 2000);
 
 /* --------------------------------------------------
-   HIDDEN MESSAGE REVEAL — glitch-fade + CRT ripple
+   HIDDEN MESSAGE — soft reveal, stacked properly
 -------------------------------------------------- */
 function revealHiddenMessage() {
     const cursor = document.getElementById("cursor");
@@ -225,7 +198,6 @@ function revealHiddenMessage() {
     ];
 
     const container = document.createElement("div");
-    container.classList.add("hidden-message");
     container.style.marginTop = "2rem";
     container.style.display = "flex";
     container.style.flexDirection = "column";
@@ -238,9 +210,8 @@ function revealHiddenMessage() {
 
     lines.forEach((text, i) => {
         const line = document.createElement("div");
+        line.classList.add("hidden-message-line");
         line.textContent = text;
-        line.style.opacity = "0";
-        line.style.animation = `glitchFade 1.8s ease-out forwards`;
         line.style.animationDelay = `${0.8 + i * 1.2}s`;
         container.appendChild(line);
     });
