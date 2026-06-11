@@ -111,6 +111,10 @@
 <div id="cursor"></div>
 
 <script>
+    /*GLITCH MODE */
+    // Glitch characters for distortion
+const glitchChars = ["#", "%", "&", "@", "?", "!", "§", "¤", "▓", "░"];
+
 /* --------------------------------------------------
    EDITABLE VOID SCRIPT — slow & eerie
 -------------------------------------------------- */
@@ -142,20 +146,56 @@ function typeLine() {
 
     if (line < script.length) {
         if (char < script[line].length) {
-            terminal.innerHTML += script[line][char];
+
+            // 10% chance of glitch
+            const isGlitch = Math.random() < 0.10;
+            const realChar = script[line][char];
+            const glitchChar = glitchChars[Math.floor(Math.random() * glitchChars.length)];
+
+            terminal.innerHTML += isGlitch ? glitchChar : realChar;
+
             char++;
-            setTimeout(typeLine, speed);
+            setTimeout(typeLine, isGlitch ? speed / 2 : speed);
+
         } else {
             terminal.innerHTML += "\n";
             line++;
             char = 0;
             setTimeout(typeLine, linePause);
         }
+    } else {
+        revealHiddenMessage();
     }
 }
 
+
 /* Start typing after boot delay */
 setTimeout(typeLine, 2000);
+
+/* --------------------------------------------------
+   HIDDEN MESSAGE REVEAL — after script finishes    
+   ---------------------------------------------------- */
+function revealHiddenMessage() {
+    const cursor = document.getElementById("cursor");
+    cursor.style.display = "none";
+
+    const hidden = document.createElement("div");
+    hidden.style.marginTop = "2rem";
+    hidden.style.opacity = "0";
+    hidden.style.transition = "opacity 3s ease-out";
+    hidden.style.color = "#00ff66";
+    hidden.style.fontSize = "1.3rem";
+    hidden.style.letterSpacing = "0.08em";
+
+    hidden.textContent = "I miss you... missed you... or me... myself?";
+
+    document.body.appendChild(hidden);
+
+    setTimeout(() => {
+        hidden.style.opacity = "1";
+    }, 800);
+}
+
 </script>
 
 </body>
