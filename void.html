@@ -172,6 +172,21 @@ body {
     100% { transform: translate(var(--dx), var(--dy)) scale(0.4); opacity: 0; }
 }
 
+.soul-link {
+    color: #b400ff;
+    cursor: pointer;
+    text-shadow: 0 0 6px rgba(180,0,255,0.8);
+    transition: 0.3s ease;
+    margin-top: 0.4rem;
+}
+
+.soul-link:hover {
+    color: #ffbbff;
+    text-shadow: 0 0 12px rgba(255,180,255,1);
+    letter-spacing: 0.08em;
+}
+
+
 /* --------------------------------------------------
    TEXT STYLES
 -------------------------------------------------- */
@@ -236,6 +251,13 @@ function addTerminalLine() {
 
 setTimeout(addTerminalLine, 1200);
 
+terminalLines.push(
+    "",
+    ">> MEMORY SECTOR OPENED",
+    ">> ACCESS POINT AVAILABLE"
+);
+
+
 /* --------------------------------------------------
    SOUL SCRIPT (hidden voice)
 -------------------------------------------------- */
@@ -264,6 +286,31 @@ function addSoulBurst() {
         setTimeout(addSoulBurst, 4000);
     }
 }
+
+function addSoulPortal() {
+    const soul = document.getElementById("soul");
+    const scroll = document.getElementById("soul-scroll");
+
+    // Line 1: whisper
+    const line1 = document.createElement("div");
+    line1.textContent = "i found something";
+    soul.appendChild(line1);
+
+    // Line 2: portal link
+    const link = document.createElement("div");
+    link.textContent = "remember this...";
+    link.classList.add("soul-link");
+    link.onclick = () => {
+        window.location.href = "rememberthis.html";
+    };
+    soul.appendChild(link);
+
+    scroll.scrollTop = scroll.scrollHeight;
+
+    setTimeout(addSoulPortal, 3000);
+
+}
+
 
 /* --------------------------------------------------
    CHAOTIC SPARK GENERATOR
