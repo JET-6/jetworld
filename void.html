@@ -179,22 +179,40 @@ function revealHiddenMessage() {
     const cursor = document.getElementById("cursor");
     cursor.style.display = "none";
 
-    const hidden = document.createElement("div");
-    hidden.style.marginTop = "2rem";
-    hidden.style.opacity = "0";
-    hidden.style.transition = "opacity 3s ease-out";
-    hidden.style.color = "#00ff66";
-    hidden.style.fontSize = "1.3rem";
-    hidden.style.letterSpacing = "0.08em";
+    const lines = [
+        "I miss you...",
+        "missed you...",
+        "or me...",
+        "myself?"
+    ];
 
-    hidden.textContent = "I miss you... missed you... or me... myself?";
+    const container = document.createElement("div");
+    container.style.marginTop = "2rem";
+    container.style.display = "flex";
+    container.style.flexDirection = "column";
+    container.style.gap = "0.4rem";
+    container.style.fontSize = "1.3rem";
+    container.style.letterSpacing = "0.08em";
+    container.style.color = "#00ff66";
+    container.style.opacity = "1";
 
-    document.body.appendChild(hidden);
+    // Insert underneath the terminal
+    document.getElementById("terminal").insertAdjacentElement("afterend", container);
 
-    setTimeout(() => {
-        hidden.style.opacity = "1";
-    }, 800);
+    // Staggered reveal
+    lines.forEach((text, i) => {
+        const line = document.createElement("div");
+        line.textContent = text;
+        line.style.opacity = "0";
+        line.style.transition = "opacity 2.2s ease-out";
+        container.appendChild(line);
+
+        setTimeout(() => {
+            line.style.opacity = "1";
+        }, 800 + i * 1200); // stagger each line
+    });
 }
+
 
 </script>
 
