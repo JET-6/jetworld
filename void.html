@@ -284,6 +284,9 @@ function addSoulBurst() {
     sIndex++;
     if (sIndex < soulBursts.length) {
         setTimeout(addSoulBurst, 4000);
+    } else {
+        // After the final burst, reveal the portal
+        setTimeout(addSoulPortal, 3000);
     }
 }
 
@@ -306,8 +309,6 @@ function addSoulPortal() {
     soul.appendChild(link);
 
     scroll.scrollTop = scroll.scrollHeight;
-
-    setTimeout(addSoulPortal, 3000);
 
 }
 
