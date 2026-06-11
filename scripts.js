@@ -110,9 +110,8 @@ function shutdownJETWORLD() {
 
   // Optional: fade out audio, stop animation loop, etc.
 }
-globeContainer.addEventListener('click', () => {
-  shutdownJETWORLD();
-});
+globeContainer.addEventListener('click', shutdownJETWORLD);
+
 
 /* IF WE WANT TO REDIRECT OR LEAD INTO SOMETHING ELSE
 globeContainer.addEventListener('click', () => {
