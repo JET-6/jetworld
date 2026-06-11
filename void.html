@@ -10,18 +10,6 @@
 /* --------------------------------------------------
    VOID BACKGROUND — pulsing hologram fog
 -------------------------------------------------- */
-/* BURNED MAP OF THE VOID */
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background: radial-gradient(circle at top left, rgba(0,0,0,0.4), transparent 60%),
-                radial-gradient(circle at bottom right, rgba(0,0,0,0.4), transparent 60%);
-    mix-blend-mode: multiply;
-    opacity: 0.6;
-}
-
 body {
     margin: 0;
     background: #000;
@@ -39,12 +27,30 @@ body {
         rgba(0,0,0,1) 80%
     );
     background-size: 200% 200%;
+    position: relative;
 }
 
 @keyframes voidPulse {
     0%   { background-size: 200% 200%; opacity: 0.95; }
     50%  { background-size: 230% 230%; opacity: 1; }
     100% { background-size: 200% 200%; opacity: 0.95; }
+}
+
+/* --------------------------------------------------
+   TORN / CORRUPTED EDGE MASK
+-------------------------------------------------- */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at top left, rgba(0,0,0,0.55), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(0,0,0,0.55), transparent 60%),
+        radial-gradient(circle at top right, rgba(0,0,0,0.35), transparent 70%),
+        radial-gradient(circle at bottom left, rgba(0,0,0,0.35), transparent 70%);
+    mix-blend-mode: multiply;
+    opacity: 0.7;
 }
 
 /* Subtle shimmer noise overlay */
@@ -67,18 +73,14 @@ body::after {
    TERMINAL TEXT
 -------------------------------------------------- */
 #terminal-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* centers terminal + cursor */
+    display: block;
     width: 100%;
     max-width: 90%;
-    margin: 0 auto;
 }
 
 #terminal {
     display: block;
     font-size: 1.2rem;
-    text-align: center;
     white-space: pre-wrap;
     line-height: 1.4;
     opacity: 0;
@@ -93,11 +95,11 @@ body::after {
 
 /* Blinking cursor */
 #cursor {
-    display: block;       /* forces stacking */
+    display: block;
     width: 12px;
     height: 1.2rem;
     background: #00ff66;
-    margin: 0.2rem auto 0 auto;
+    margin-top: 0.2rem;
     animation: blink 1.2s infinite;
     opacity: 0;
     animation-delay: 2s;
@@ -110,35 +112,35 @@ body::after {
 }
 
 /* --------------------------------------------------
-   Soft hidden message reveal
+   Hidden message — lower-right whisper
 -------------------------------------------------- */
-@keyframes softReveal {
-    0% {
-        opacity: 0;
-        transform: translateY(6px);
-        text-shadow: none;
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-        text-shadow: 0 0 6px #00ff66;
-    }
-}
-
 .hidden-message-container {
     position: absolute;
     bottom: 2rem;
     right: 2rem;
     text-align: right;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     gap: 0.3rem;
 }
 
+/* Soft reveal + subtle horizontal drift */
+@keyframes softRevealDrift {
+    0% {
+        opacity: 0;
+        transform: translate(8px, 6px);
+        text-shadow: none;
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0, 0);
+        text-shadow: 0 0 6px #00ff66;
+    }
+}
 
 .hidden-message-line {
     opacity: 0;
-    animation: softReveal 1.8s ease-out forwards;
+    animation: softRevealDrift 2.2s ease-out forwards;
 }
 </style>
 </head>
@@ -211,7 +213,7 @@ function typeLine() {
 setTimeout(typeLine, 2000);
 
 /* --------------------------------------------------
-   HIDDEN MESSAGE — soft reveal, stacked properly
+   HIDDEN MESSAGE — lower-right whisper
 -------------------------------------------------- */
 function revealHiddenMessage() {
     const cursor = document.getElementById("cursor");
@@ -220,21 +222,14 @@ function revealHiddenMessage() {
     const lines = [
         "I miss you...",
         "missed you...",
-        "or...",
+        "or me...",
         "myself?"
     ];
 
     const container = document.createElement("div");
     container.classList.add("hidden-message-container");
-    container.style.marginTop = "2rem";
-    container.style.display = "flex";
-    container.style.flexDirection = "column";
-    container.style.gap = "0.4rem";
-    container.style.fontSize = "1.3rem";
-    container.style.letterSpacing = "0.08em";
-    container.style.color = "#00ff66";
 
-    document.getElementById("terminal-wrapper").insertAdjacentElement("afterend", container);
+    document.body.appendChild(container);
 
     lines.forEach((text, i) => {
         const line = document.createElement("div");
