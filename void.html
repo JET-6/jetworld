@@ -21,7 +21,11 @@ body {
     font-family: "VT323", monospace;
     color: #00ff66;
     letter-spacing: 0.05em;
-    animation: voidPulse 6s ease-in-out infinite;
+
+    animation:
+        voidPulse 6s ease-in-out infinite,
+        hologramBurn 7.5s ease-in-out infinite;
+
     background: radial-gradient(circle at center,
         rgba(40,40,40,0.15) 0%,
         rgba(0,0,0,1) 80%
@@ -37,24 +41,42 @@ body {
 }
 
 /* --------------------------------------------------
-   TORN / CORRUPTED EDGE MASK
+   BURNED HOLOGRAM FLICKER (Halo‑style)
+-------------------------------------------------- */
+@keyframes hologramBurn {
+    0%   { filter: brightness(1) contrast(1); }
+    45%  { filter: brightness(1.05) contrast(1.1); }
+    50%  { filter: brightness(0.9) contrast(1.3) saturate(1.4); }
+    55%  { filter: brightness(1.1) contrast(1); }
+    100% { filter: brightness(1) contrast(1); }
+}
+
+/* --------------------------------------------------
+   TORN / CORRUPTED EDGE MASK + EMBER GLOW
 -------------------------------------------------- */
 body::before {
     content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
+
     background:
-        radial-gradient(circle at top left, rgba(0,0,0,0.55), transparent 60%),
-        radial-gradient(circle at bottom right, rgba(0,0,0,0.55), transparent 60%),
-        radial-gradient(circle at top right, rgba(0,0,0,0.35), transparent 70%),
-        radial-gradient(circle at bottom left, rgba(0,0,0,0.35), transparent 70%);
-    mix-blend-mode: multiply;
-    opacity: 0.7;
+        /* Burned edges */
+        radial-gradient(circle at top left, rgba(0,0,0,0.75), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(0,0,0,0.75), transparent 55%),
+        radial-gradient(circle at top right, rgba(0,0,0,0.45), transparent 70%),
+        radial-gradient(circle at bottom left, rgba(0,0,0,0.45), transparent 70%),
+
+        /* Ember neon glow */
+        radial-gradient(circle at top left, rgba(0,255,102,0.12), transparent 70%),
+        radial-gradient(circle at bottom right, rgba(0,255,102,0.12), transparent 70%);
+
+    mix-blend-mode: screen;
+    opacity: 0.9;
 }
 
 /* --------------------------------------------------
-   PURE CSS NOISE OVERLAY — no external files
+   PURE CSS NOISE OVERLAY — stronger
 -------------------------------------------------- */
 body::after {
     content: "";
@@ -64,20 +86,20 @@ body::after {
 
     background-image: repeating-radial-gradient(
         circle,
-        rgba(255,255,255,0.03) 0,
-        rgba(255,255,255,0.03) 1px,
+        rgba(255,255,255,0.06) 0,
+        rgba(255,255,255,0.06) 1px,
         transparent 1px,
         transparent 3px
     );
 
     mix-blend-mode: overlay;
-    opacity: 0.08;
-    animation: noisePulse 4s infinite alternate;
+    opacity: 0.15;
+    animation: noisePulse 3s infinite alternate;
 }
 
 @keyframes noisePulse {
-    from { opacity: 0.04; }
-    to   { opacity: 0.10; }
+    from { opacity: 0.05; }
+    to   { opacity: 0.15; }
 }
 
 /* --------------------------------------------------
@@ -135,17 +157,17 @@ body::after {
     gap: 0.3rem;
 }
 
-/* Soft reveal + subtle horizontal drift */
+/* Soft reveal + stronger drift */
 @keyframes softRevealDrift {
     0% {
         opacity: 0;
-        transform: translate(8px, 6px);
+        transform: translate(14px, 8px);
         text-shadow: none;
     }
     100% {
         opacity: 1;
         transform: translate(0, 0);
-        text-shadow: 0 0 6px #00ff66;
+        text-shadow: 0 0 8px #00ff66;
     }
 }
 
