@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Browser jetzheart -->
+    <link rel="icon" type="image/png" href="https://jet-6.github.io/jetworld/jetzheart.png">
+
+    <!-- iOS share preview icon -->
+    <link rel="apple-touch-icon" href="https://jet-6.github.io/jetworld/jetzheart.png">
+
+    <!-- Open Graph -->
+    <meta property="og:image" content="https://jet-6.github.io/jetworld/jetzheart.png">
+    <meta property="og:title" content="JETWORLD">
+    <meta property="og:description" content="Enter the neon hologram terminal.">
+    <meta property="og:url" content="https://jet-6.github.io/jetworld/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter/X -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="https://jet-6.github.io/jetworld/jetzheart.png">
+
+
+<title>remember this</title>
+
+<style>
+body {
+    margin: 0;
+    background: #fdf7e2;
+    height: 100vh;
+    overflow: hidden;
+    font-family: "Courier New", monospace;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 2.5s ease;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; filter: blur(6px); }
+    100% { opacity: 1; filter: blur(0); }
+}
+
+#memory-container {
+    width: 90vw;
+    height: 90vh;
+    padding: 1rem;
+    overflow-y: hidden;
+    white-space: pre;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    color: #444;
+}
+
+.ascii-frame {
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+
+.visible {
+    opacity: 1;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="memory-container"></div>
+
+<script>
+/* --------------------------------------------------
+   ASCII FLASHBACK — PURE JOY
+-------------------------------------------------- */
+
+const frames = [
+
+`  \\\\o    o////
+     |    |
+    / \\  / \\
+    
+Two figures running.`,
+
+`   \\o/      \\o/
+    ( )      ( )
+    / \\      / \\
+    
+They laugh as they run.`,
+
+`   \\o_      _o/
+     ( )    ( )
+    / >\\    /< \\
+    
+They dance in circles.`,
+
+`   \\o/   \\o/   \\o/   \\o/
+    ( )   ( )   ( )   ( )
+    / \\   / \\   / \\   / \\
+    
+And then there were four.`,
+
+`   \\o/   \\o/   \\o/   \\o/
+  ~ ( ) ~ ( ) ~ ( ) ~ ( ) ~
+    / \\   / \\   / \\   / \\
+    
+Joy multiplying.`,
+
+`   \\o/   \\o/   \\o/   \\o/
+    ( )   ( )   ( )   ( )
+ ~~/ \\~~~ / \\~~~ / \\~~~ / \\~~
+    
+A memory glowing.`,
+
+`remember this.
+you were happy here.`
+
+];
+
+let index = 0;
+const container = document.getElementById("memory-container");
+
+function showNextFrame() {
+    if (index >= frames.length) return;
+
+    const frame = document.createElement("div");
+    frame.classList.add("ascii-frame");
+    frame.textContent = frames[index];
+    container.appendChild(frame);
+
+    // fade in
+    setTimeout(() => frame.classList.add("visible"), 100);
+
+    // auto-scroll
+    container.scrollTop = container.scrollHeight;
+
+    index++;
+    setTimeout(showNextFrame, 3000);
+}
+
+setTimeout(showNextFrame, 1200);
+
+</script>
+
+</body>
+</html>
