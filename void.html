@@ -55,14 +55,18 @@ body::after {
    TERMINAL TEXT
 -------------------------------------------------- */
 #terminal-wrapper {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centers terminal + cursor */
     width: 100%;
     max-width: 90%;
+    margin: 0 auto;
 }
 
 #terminal {
     display: block;
     font-size: 1.2rem;
+    text-align: center;
     white-space: pre-wrap;
     line-height: 1.4;
     opacity: 0;
@@ -81,7 +85,7 @@ body::after {
     width: 12px;
     height: 1.2rem;
     background: #00ff66;
-    margin-top: 0.2rem;
+    margin: 0.2rem auto 0 auto;
     animation: blink 1.2s infinite;
     opacity: 0;
     animation-delay: 2s;
@@ -107,6 +111,14 @@ body::after {
         transform: translateY(0);
         text-shadow: 0 0 6px #00ff66;
     }
+}
+
+.hidden-message-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centers each hidden line */
+    width: 100%;
+    margin-top: 2rem;
 }
 
 .hidden-message-line {
@@ -198,6 +210,7 @@ function revealHiddenMessage() {
     ];
 
     const container = document.createElement("div");
+    container.classList.add("hidden-message-container");
     container.style.marginTop = "2rem";
     container.style.display = "flex";
     container.style.flexDirection = "column";
