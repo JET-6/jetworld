@@ -4,11 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Browser jetzheart -->
+    <link rel="icon" type="image/png" href="https://jet-6.github.io/wadayawant/jetzheart.png">
+
+    <!-- iOS share preview icon -->
+    <link rel="apple-touch-icon" href="https://jet-6.github.io/wadayawant/jetzheart.png">
+
+    <!-- Open Graph -->
+    <meta property="og:image" content="https://jet-6.github.io/wadayawant/jetzheart.png">
+    <meta property="og:title" content="JETWORLD">
+    <meta property="og:description" content="Enter the neon hologram terminal.">
+    <meta property="og:url" content="https://jet-6.github.io/wadayawant/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter/X -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="https://jet-6.github.io/wadayawant/jetzheart.png">
+
+
 <title>THE VOID</title>
 
 <style>
 /* --------------------------------------------------
-   VOID BACKGROUND — pulsing hologram fog
+   BASE BACKGROUND — pulsing hologram fog
 -------------------------------------------------- */
 body {
     margin: 0;
@@ -27,7 +45,7 @@ body {
         hologramBurn 7.5s ease-in-out infinite;
 
     background: radial-gradient(circle at center,
-        rgba(40,40,40,0.15) 0%,
+        rgba(40,40,40,0.2) 0%,
         rgba(0,0,0,1) 80%
     );
     background-size: 200% 200%;
@@ -45,61 +63,61 @@ body {
 -------------------------------------------------- */
 @keyframes hologramBurn {
     0%   { filter: brightness(1) contrast(1); }
-    45%  { filter: brightness(1.05) contrast(1.1); }
-    50%  { filter: brightness(0.9) contrast(1.3) saturate(1.4); }
-    55%  { filter: brightness(1.1) contrast(1); }
+    45%  { filter: brightness(1.08) contrast(1.15); }
+    50%  { filter: brightness(0.85) contrast(1.35) saturate(1.4); }
+    55%  { filter: brightness(1.12) contrast(1); }
     100% { filter: brightness(1) contrast(1); }
 }
 
 /* --------------------------------------------------
-   TORN / CORRUPTED EDGE MASK + EMBER GLOW
+   TORN / BURNT EDGES — NOW VISIBLE
 -------------------------------------------------- */
-body::before {
+#burnt-edges {
     content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
+    z-index: 5;
 
     background:
-        /* Burned edges */
-        radial-gradient(circle at top left, rgba(0,0,0,0.75), transparent 55%),
-        radial-gradient(circle at bottom right, rgba(0,0,0,0.75), transparent 55%),
-        radial-gradient(circle at top right, rgba(0,0,0,0.45), transparent 70%),
-        radial-gradient(circle at bottom left, rgba(0,0,0,0.45), transparent 70%),
+        /* Dark burned edges */
+        radial-gradient(circle at top left, rgba(0,0,0,0.85), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(0,0,0,0.85), transparent 60%),
+        radial-gradient(circle at top right, rgba(0,0,0,0.55), transparent 75%),
+        radial-gradient(circle at bottom left, rgba(0,0,0,0.55), transparent 75%),
 
         /* Ember neon glow */
-        radial-gradient(circle at top left, rgba(0,255,102,0.12), transparent 70%),
-        radial-gradient(circle at bottom right, rgba(0,255,102,0.12), transparent 70%);
-
-    mix-blend-mode: screen;
-    opacity: 0.9;
+        radial-gradient(circle at top left, rgba(0,255,102,0.18), transparent 75%),
+        radial-gradient(circle at bottom right, rgba(0,255,102,0.18), transparent 75%);
+    
+    opacity: 1;
 }
 
 /* --------------------------------------------------
-   PURE CSS NOISE OVERLAY — stronger
+   PURE CSS NOISE — NOW VISIBLE
 -------------------------------------------------- */
-body::after {
+#noise-overlay {
     content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
+    z-index: 6;
 
     background-image: repeating-radial-gradient(
         circle,
-        rgba(255,255,255,0.06) 0,
-        rgba(255,255,255,0.06) 1px,
+        rgba(255,255,255,0.08) 0,
+        rgba(255,255,255,0.08) 1px,
         transparent 1px,
         transparent 3px
     );
 
-    mix-blend-mode: overlay;
-    opacity: 0.15;
+    opacity: 0.18;
     animation: noisePulse 3s infinite alternate;
 }
 
 @keyframes noisePulse {
-    from { opacity: 0.05; }
-    to   { opacity: 0.15; }
+    from { opacity: 0.10; }
+    to   { opacity: 0.22; }
 }
 
 /* --------------------------------------------------
@@ -109,6 +127,7 @@ body::after {
     display: block;
     width: 100%;
     max-width: 90%;
+    z-index: 10;
 }
 
 #terminal {
@@ -155,6 +174,7 @@ body::after {
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
+    z-index: 12;
 }
 
 /* Soft reveal + stronger drift */
@@ -180,6 +200,13 @@ body::after {
 
 <body>
 
+<!-- Burnt edges layer -->
+<div id="burnt-edges"></div>
+
+<!-- Noise layer -->
+<div id="noise-overlay"></div>
+
+<!-- Terminal -->
 <div id="terminal-wrapper">
     <div id="terminal"></div>
     <div id="cursor"></div>
