@@ -26,16 +26,13 @@
 
 <style>
 /* --------------------------------------------------
-   BASE BACKGROUND — stronger breathing fog
+   BASE BACKGROUND — breathing, shimmering, fractured
 -------------------------------------------------- */
 body {
     margin: 0;
     background: #000;
     height: 100vh;
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-family: "VT323", monospace;
     color: #00ff66;
     letter-spacing: 0.05em;
@@ -59,9 +56,6 @@ body {
     100% { background-size: 180% 180%; opacity: 0.9; }
 }
 
-/* --------------------------------------------------
-   BURNED HOLOGRAM FLICKER
--------------------------------------------------- */
 @keyframes hologramBurn {
     0%   { filter: brightness(1) contrast(1); }
     40%  { filter: brightness(1.1) contrast(1.2); }
@@ -70,9 +64,6 @@ body {
     100% { filter: brightness(1) contrast(1); }
 }
 
-/* --------------------------------------------------
-   PURPLE PULSE — chaotic chromatic aberration
--------------------------------------------------- */
 @keyframes purplePulse {
     0%   { box-shadow: inset 0 0 0 rgba(180,0,255,0.0); }
     40%  { box-shadow: inset 0 0 40px rgba(180,0,255,0.25); }
@@ -82,7 +73,7 @@ body {
 }
 
 /* --------------------------------------------------
-   EMBER + PURPLE FRACTURE EDGES
+   FRACTURED EDGES — green core, ember glow, purple tear
 -------------------------------------------------- */
 #fracture-edges {
     position: fixed;
@@ -91,13 +82,10 @@ body {
     z-index: 5;
 
     background:
-        /* Green inner glow */
         radial-gradient(circle at center,
             rgba(0,255,102,0.10),
             transparent 70%
         ),
-
-        /* Ember orange outer glow */
         radial-gradient(circle at top left,
             rgba(255,120,0,0.28),
             transparent 60%
@@ -114,8 +102,6 @@ body {
             rgba(255,100,0,0.28),
             transparent 60%
         ),
-
-        /* Purple fracture glow */
         radial-gradient(circle at top left,
             rgba(180,0,255,0.35),
             transparent 70%
@@ -124,8 +110,33 @@ body {
             rgba(180,0,255,0.35),
             transparent 70%
         );
+}
 
-    opacity: 1;
+/* --------------------------------------------------
+   SCROLL ZONES — dual consciousness
+-------------------------------------------------- */
+.scroll-zone {
+    position: absolute;
+    width: 60vw;
+    height: 45vh;
+    overflow-y: hidden;
+    padding: 1rem;
+    z-index: 10;
+}
+
+/* Terminal (mind) — center-left */
+#terminal-scroll {
+    top: 10vh;
+    left: 5vw;
+}
+
+/* Soul (hidden voice) — lower-right */
+#soul-scroll {
+    bottom: 5vh;
+    right: 5vw;
+    width: 30vw;
+    height: 35vh;
+    filter: drop-shadow(0 0 6px rgba(180,0,255,0.6));
 }
 
 /* --------------------------------------------------
@@ -143,7 +154,6 @@ body {
     animation: drift var(--duration) linear infinite;
 }
 
-/* Purple ghost-trail */
 .spark::after {
     content: "";
     position: absolute;
@@ -158,192 +168,101 @@ body {
 }
 
 @keyframes drift {
-    0% {
-        transform: translate(0, 0) scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--dx), var(--dy)) scale(0.4);
-        opacity: 0;
-    }
+    0%   { transform: translate(0, 0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--dx), var(--dy)) scale(0.4); opacity: 0; }
 }
 
 /* --------------------------------------------------
-   TERMINAL TEXT
+   TEXT STYLES
 -------------------------------------------------- */
-#terminal-wrapper {
-    display: block;
-    width: 100%;
-    max-width: 90%;
-    z-index: 10;
-}
-
-#terminal {
-    display: block;
-    font-size: 1.2rem;
+#terminal, #soul {
     white-space: pre-wrap;
+    font-size: 1.1rem;
     line-height: 1.4;
-    opacity: 0;
-    animation: fadeIn 2s ease-out forwards;
-    animation-delay: 1.5s;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-}
-
-/* Blinking cursor */
-#cursor {
-    display: block;
-    width: 12px;
-    height: 1.2rem;
-    background: #00ff66;
-    margin-top: 0.2rem;
-    animation: blink 1.2s infinite;
-    opacity: 0;
-    animation-delay: 2s;
-    animation-fill-mode: forwards;
-}
-
-@keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%,100% { opacity: 0; }
-}
-
-/* --------------------------------------------------
-   Hidden message — purple halo
--------------------------------------------------- */
-.hidden-message-container {
-    position: absolute;
-    bottom: 2rem;
-    right: 2rem;
-    text-align: right;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    z-index: 12;
-    filter: drop-shadow(0 0 6px rgba(180,0,255,0.6));
-}
-
-/* Soft reveal + drift */
-@keyframes softRevealDrift {
-    0% {
-        opacity: 0;
-        transform: translate(14px, 8px);
-        text-shadow: none;
-    }
-    100% {
-        opacity: 1;
-        transform: translate(0, 0);
-        text-shadow: 0 0 8px #00ff66;
-    }
-}
-
-.hidden-message-line {
-    opacity: 0;
-    animation: softRevealDrift 2.2s ease-out forwards;
 }
 </style>
 </head>
 
 <body>
 
-<!-- Fractured edges -->
 <div id="fracture-edges"></div>
 
-<!-- Terminal -->
-<div id="terminal-wrapper">
+<!-- Terminal (mind) -->
+<div id="terminal-scroll" class="scroll-zone">
     <div id="terminal"></div>
-    <div id="cursor"></div>
+</div>
+
+<!-- Soul (hidden voice) -->
+<div id="soul-scroll" class="scroll-zone">
+    <div id="soul"></div>
 </div>
 
 <script>
 /* --------------------------------------------------
-   GLITCH MODE
+   TERMINAL SCRIPT (mind)
 -------------------------------------------------- */
-const glitchChars = ["#", "%", "&", "@", "?", "!", "§", "¤", "▓", "░"];
-
-/* --------------------------------------------------
-   VOID SCRIPT
--------------------------------------------------- */
-const script = [
+const terminalLines = [
     "BOOTING VOID NODE...",
     "SIGNAL LOST...",
     "RE-ESTABLISHING CONNECTION...",
     "",
     ">> Operator detected.",
-    ">> The system remembers you.",
-    ">> The dark remembers you.",
+    ">> Running diagnostics...",
+    ">> Memory sectors unstable.",
+    ">> Emotional interference detected.",
     "",
-    "INITIALIZING MEMORY RECALL...",
+    "INITIALIZING RECALL SUBSYSTEM...",
     "STABILIZING REALITY ANCHORS...",
     "",
     ">> Proceed when ready."
 ];
 
-/* --------------------------------------------------
-   TYPEWRITER ENGINE
--------------------------------------------------- */
-let line = 0;
-let char = 0;
-const speed = 70;
-const linePause = 900;
+let tIndex = 0;
 
-function typeLine() {
+function addTerminalLine() {
     const terminal = document.getElementById("terminal");
+    const scroll = document.getElementById("terminal-scroll");
 
-    if (line < script.length) {
-        if (char < script[line].length) {
+    terminal.innerHTML += terminalLines[tIndex] + "\n";
+    scroll.scrollTop = scroll.scrollHeight;
 
-            const isGlitch = Math.random() < 0.02;
-            const realChar = script[line][char];
-            const glitchChar = glitchChars[Math.floor(Math.random() * glitchChars.length)];
-
-            terminal.innerHTML += isGlitch ? glitchChar : realChar;
-
-            char++;
-            setTimeout(typeLine, isGlitch ? speed / 2 : speed);
-
-        } else {
-            terminal.innerHTML += "\n";
-            line++;
-            char = 0;
-            setTimeout(typeLine, linePause);
-        }
+    tIndex++;
+    if (tIndex < terminalLines.length) {
+        setTimeout(addTerminalLine, 900);
     } else {
-        revealHiddenMessage();
+        setTimeout(addSoulBurst, 1500);
     }
 }
 
-setTimeout(typeLine, 2000);
+setTimeout(addTerminalLine, 1200);
 
 /* --------------------------------------------------
-   HIDDEN MESSAGE
+   SOUL SCRIPT (hidden voice)
 -------------------------------------------------- */
-function revealHiddenMessage() {
-    const cursor = document.getElementById("cursor");
-    cursor.style.display = "none";
+const soulBursts = [
+    ["I miss you...", "missed you...", "or me...", "myself?"],
+    ["Why does it hurt to remember?", "Why does it hurt not to?"],
+    ["I'm trying...", "I think you are too."],
+    ["Are we breaking?", "Or becoming?"]
+];
 
-    const lines = [
-        "I miss you...",
-        "missed you...",
-        "or me...",
-        "myself?"
-    ];
+let sIndex = 0;
 
-    const container = document.createElement("div");
-    container.classList.add("hidden-message-container");
+function addSoulBurst() {
+    const soul = document.getElementById("soul");
+    const scroll = document.getElementById("soul-scroll");
 
-    document.body.appendChild(container);
-
-    lines.forEach((text, i) => {
-        const line = document.createElement("div");
-        line.classList.add("hidden-message-line");
-        line.textContent = text;
-        line.style.animationDelay = `${0.8 + i * 1.2}s`;
-        container.appendChild(line);
+    const burst = soulBursts[sIndex];
+    burst.forEach(line => {
+        soul.innerHTML += line + "\n";
     });
+
+    scroll.scrollTop = scroll.scrollHeight;
+
+    sIndex++;
+    if (sIndex < soulBursts.length) {
+        setTimeout(addSoulBurst, 4000);
+    }
 }
 
 /* --------------------------------------------------
@@ -353,29 +272,23 @@ function spawnSpark() {
     const spark = document.createElement("div");
     spark.classList.add("spark");
 
-    // Random start position
     spark.style.left = Math.random() * window.innerWidth + "px";
     spark.style.top = Math.random() * window.innerHeight + "px";
 
-    // Random drift direction
     const dx = (Math.random() - 0.5) * 300;
     const dy = (Math.random() - 0.5) * 300;
 
     spark.style.setProperty("--dx", dx + "px");
     spark.style.setProperty("--dy", dy + "px");
 
-    // Random duration (slow embers + fast sparks)
     spark.style.setProperty("--duration",
         (Math.random() * 2 + 1.5) + "s"
     );
 
     document.body.appendChild(spark);
-
-    // Remove after animation
     setTimeout(() => spark.remove(), 5000);
 }
 
-// Spawn sparks continuously
 setInterval(spawnSpark, 90);
 </script>
 
