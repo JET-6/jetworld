@@ -147,8 +147,8 @@ function typeLine() {
     if (line < script.length) {
         if (char < script[line].length) {
 
-            // 10% chance of glitch
-            const isGlitch = Math.random() < 0.10;
+            // 2% chance of glitch
+            const isGlitch = Math.random() < 0.02;
             const realChar = script[line][char];
             const glitchChar = glitchChars[Math.floor(Math.random() * glitchChars.length)];
 
