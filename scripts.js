@@ -8,29 +8,23 @@ function startBootSequence() {
     if (bootTriggered) return;
     bootTriggered = true;
 
-    // Hide tap prompt
     const tap = document.getElementById("tap-to-enter");
     tap.style.display = "none";
 
-    // Allow animations to run
     document.body.classList.add("boot-active");
 
-    // Reveal landing container
     const landing = document.querySelector(".landing-container");
     landing.style.opacity = "1";
     landing.style.pointerEvents = "auto";
 
-    // Start the globe animation AFTER the CSS boot timing
     setTimeout(() => {
         animate();
     }, 3400);
 }
 
 if (window.innerWidth < 600) {
-    const tap = document.getElementById("tap-to-enter");
-    tap.addEventListener("click", startBootSequence);
+    document.getElementById("tap-to-enter").addEventListener("click", startBootSequence);
 } else {
-    // Desktop: start immediately
     startBootSequence();
 }
 
@@ -40,25 +34,17 @@ if (window.innerWidth < 600) {
 
 const container = document.getElementById("globe-container");
 
-// Scene
 const scene = new THREE.Scene();
-
-// Camera
 const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 1000);
 camera.position.z = 3.5;
 
-// Renderer
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 renderer.setSize(256, 256);
 container.appendChild(renderer.domElement);
 
-// Geometry
 const geometry = new THREE.SphereGeometry(1, 32, 32);
-
-// Texture loader
 const textureLoader = new THREE.TextureLoader();
 
-// Base material (texture visible)
 const material = new THREE.MeshStandardMaterial({
     emissive: 0x00ffff,
     emissiveIntensity: 0.35,
@@ -68,7 +54,6 @@ const material = new THREE.MeshStandardMaterial({
     opacity: 0.95
 });
 
-// Wireframe overlay (subtle)
 const wireMaterial = new THREE.MeshBasicMaterial({
     color: 0x00ffff,
     wireframe: true,
@@ -76,59 +61,47 @@ const wireMaterial = new THREE.MeshBasicMaterial({
     opacity: 0.15
 });
 
-// Meshes
 const globe = new THREE.Mesh(geometry, material);
 const wireframe = new THREE.Mesh(geometry, wireMaterial);
 
 scene.add(globe);
 scene.add(wireframe);
 
-// Load Earth texture AFTER globe exists
 textureLoader.load("earth.jpg", (earthTexture) => {
     material.map = earthTexture;
     material.needsUpdate = true;
 });
 
-// Lighting
-const ambientLight = new THREE.AmbientLight(0x404040, 1.5);
-scene.add(ambientLight);
+scene.add(new THREE.AmbientLight(0x404040, 1.5));
+scene.add(new THREE.AmbientLight(0x00ffff, 2.5));
 
-const holoLight = new THREE.AmbientLight(0x00ffff, 2.5);
-scene.add(holoLight);
-
-// Animation loop
 function animate() {
     requestAnimationFrame(animate);
     globe.rotation.y += 0.003;
     renderer.render(scene, camera);
 }
 
-// Shutdown sequence
-// 1. Shutdown animation (CRT collapse → supernova)
+/* --------------------------------------------------
+   SHUTDOWN + BLACKOUT
+-------------------------------------------------- */
+
 function shutdownJETWORLD() {
-  const overlay = document.getElementById('shutdown-overlay');
-  overlay.classList.add('shutdown-active');
+  document.getElementById('shutdown-overlay').classList.add('shutdown-active');
 }
 
-// 2. Blackout + redirect to VOID
 function startBlackout() {
   const blackout = document.getElementById('blackout');
 
-  // Fade to black after shutdown animation begins
   setTimeout(() => {
     blackout.classList.add('active');
-  }, 800); // adjust to sync with your CRT collapse timing
+  }, 800);
 
-  // Redirect once blackout is fully opaque
   setTimeout(() => {
-    window.location.href = "void.html"; // your second page
+    window.location.href = "void.html";
   }, 2000);
 }
 
-// 3. Combined sequence on globe tap
-const globeContainer = document.getElementById('globe-container');
-
-globeContainer.addEventListener('click', () => {
-  shutdownJETWORLD();  // play CRT collapse + supernova
-  startBlackout();     // fade to black + redirect
+document.getElementById('globe-container').addEventListener('click', () => {
+  shutdownJETWORLD();
+  startBlackout();
 });

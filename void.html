@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Browser jetzheart -->
+    <link rel="icon" type="image/png" href="https://jet-6.github.io/wadayawant/jetzheart.png">
+
+    <!-- iOS share preview icon -->
+    <link rel="apple-touch-icon" href="https://jet-6.github.io/wadayawant/jetzheart.png">
+
+    <!-- Open Graph -->
+    <meta property="og:image" content="https://jet-6.github.io/wadayawant/jetzheart.png">
+    <meta property="og:title" content="JETWORLD">
+    <meta property="og:description" content="Enter the neon hologram terminal.">
+    <meta property="og:url" content="https://jet-6.github.io/wadayawant/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter/X -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="https://jet-6.github.io/wadayawant/jetzheart.png">
+
+<title>THE VOID</title>
+
+<style>
+    /* --------------------------------------------------
+       VOID BACKGROUND — pulsing hologram fog
+    -------------------------------------------------- */
+    body {
+        margin: 0;
+        background: #000;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "VT323", monospace;
+        color: #00ff66;
+        letter-spacing: 0.05em;
+        animation: voidPulse 6s ease-in-out infinite;
+        background: radial-gradient(circle at center,
+            rgba(40,40,40,0.15) 0%,
+            rgba(0,0,0,1) 80%
+        );
+        background-size: 200% 200%;
+    }
+
+    @keyframes voidPulse {
+        0%   { background-size: 200% 200%; opacity: 0.95; }
+        50%  { background-size: 230% 230%; opacity: 1; }
+        100% { background-size: 200% 200%; opacity: 0.95; }
+    }
+
+    /* Subtle shimmer noise overlay */
+    body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background: url('https://grainy-gradients.vercel.app/noise.svg');
+        opacity: 0.08;
+        animation: noisePulse 4s infinite alternate;
+    }
+
+    @keyframes noisePulse {
+        from { opacity: 0.04; }
+        to   { opacity: 0.10; }
+    }
+
+    /* --------------------------------------------------
+       TERMINAL TEXT
+    -------------------------------------------------- */
+    #terminal {
+        font-size: 1.2rem;
+        max-width: 90%;
+        white-space: pre-wrap;
+        line-height: 1.4;
+        opacity: 0;
+        animation: fadeIn 2s ease-out forwards;
+        animation-delay: 1.5s;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+
+    /* Blinking cursor */
+    #cursor {
+        display: inline-block;
+        width: 12px;
+        height: 1.2rem;
+        background: #00ff66;
+        margin-left: 4px;
+        animation: blink 1.2s infinite;
+        opacity: 0;
+        animation-delay: 2s;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes blink {
+        0%, 50% { opacity: 1; }
+        51%,100% { opacity: 0; }
+    }
+</style>
+</head>
+
+<body>
+
+<div id="terminal"></div>
+<div id="cursor"></div>
+
+<script>
+/* --------------------------------------------------
+   EDITABLE VOID SCRIPT — slow & eerie
+-------------------------------------------------- */
+const script = [
+    "BOOTING VOID NODE...",
+    "SIGNAL LOST...",
+    "RE-ESTABLISHING CONNECTION...",
+    "",
+    ">> Operator detected.",
+    ">> The system remembers you.",
+    ">> The dark remembers you.",
+    "",
+    "INITIALIZING MEMORY RECALL...",
+    "STABILIZING REALITY ANCHORS...",
+    "",
+    ">> Proceed when ready."
+];
+
+/* --------------------------------------------------
+   TYPEWRITER ENGINE — slow & eerie pacing
+-------------------------------------------------- */
+let line = 0;
+let char = 0;
+const speed = 70;       // slow typing
+const linePause = 900;  // pause between lines
+
+function typeLine() {
+    const terminal = document.getElementById("terminal");
+
+    if (line < script.length) {
+        if (char < script[line].length) {
+            terminal.innerHTML += script[line][char];
+            char++;
+            setTimeout(typeLine, speed);
+        } else {
+            terminal.innerHTML += "\n";
+            line++;
+            char = 0;
+            setTimeout(typeLine, linePause);
+        }
+    }
+}
+
+/* Start typing after boot delay */
+setTimeout(typeLine, 2000);
+</script>
+
+</body>
+</html>

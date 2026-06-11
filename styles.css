@@ -269,7 +269,7 @@ body::before {
     align-items: center;
     justify-content: center;
     transition: opacity 1s ease-in;
-    z-index: 9999;
+    z-index: 10000;
 }
 
 #blackout.active {
