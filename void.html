@@ -22,7 +22,7 @@
     <meta name="twitter:image" content="https://jet-6.github.io/wadayawant/jetzheart.png">
 
 
-<title>THE VOID</title>
+<title>THE fractured VOID</title>
 
 <style>
 /* --------------------------------------------------
@@ -41,20 +41,21 @@ body {
     letter-spacing: 0.05em;
 
     animation:
-        voidPulse 5s ease-in-out infinite,
-        hologramBurn 7s ease-in-out infinite;
+        voidPulse 4.5s ease-in-out infinite,
+        hologramBurn 6.5s ease-in-out infinite,
+        purplePulse 7s ease-in-out infinite;
 
     background: radial-gradient(circle at center,
-        rgba(0,255,102,0.10) 0%,
+        rgba(0,255,102,0.12) 0%,
         rgba(0,0,0,1) 80%
     );
-    background-size: 180% 180%;
+    background-size: 200% 200%;
     position: relative;
 }
 
 @keyframes voidPulse {
     0%   { background-size: 180% 180%; opacity: 0.9; }
-    50%  { background-size: 220% 220%; opacity: 1; }
+    50%  { background-size: 230% 230%; opacity: 1; }
     100% { background-size: 180% 180%; opacity: 0.9; }
 }
 
@@ -70,9 +71,20 @@ body {
 }
 
 /* --------------------------------------------------
-   EMBER EDGES — neon green → orange glow
+   PURPLE PULSE — chaotic chromatic aberration
 -------------------------------------------------- */
-#ember-edges {
+@keyframes purplePulse {
+    0%   { box-shadow: inset 0 0 0 rgba(180,0,255,0.0); }
+    40%  { box-shadow: inset 0 0 40px rgba(180,0,255,0.25); }
+    50%  { box-shadow: inset 0 0 80px rgba(180,0,255,0.45); }
+    60%  { box-shadow: inset 0 0 40px rgba(180,0,255,0.25); }
+    100% { box-shadow: inset 0 0 0 rgba(180,0,255,0.0); }
+}
+
+/* --------------------------------------------------
+   EMBER + PURPLE FRACTURE EDGES
+-------------------------------------------------- */
+#fracture-edges {
     position: fixed;
     inset: 0;
     pointer-events: none;
@@ -81,33 +93,43 @@ body {
     background:
         /* Green inner glow */
         radial-gradient(circle at center,
-            rgba(0,255,102,0.12),
+            rgba(0,255,102,0.10),
             transparent 70%
         ),
 
-        /* Orange ember outer glow */
+        /* Ember orange outer glow */
         radial-gradient(circle at top left,
-            rgba(255,120,0,0.25),
+            rgba(255,120,0,0.28),
             transparent 60%
         ),
         radial-gradient(circle at top right,
-            rgba(255,80,0,0.25),
+            rgba(255,80,0,0.28),
             transparent 60%
         ),
         radial-gradient(circle at bottom left,
-            rgba(255,60,0,0.25),
+            rgba(255,60,0,0.28),
             transparent 60%
         ),
         radial-gradient(circle at bottom right,
-            rgba(255,100,0,0.25),
+            rgba(255,100,0,0.28),
             transparent 60%
+        ),
+
+        /* Purple fracture glow */
+        radial-gradient(circle at top left,
+            rgba(180,0,255,0.35),
+            transparent 70%
+        ),
+        radial-gradient(circle at bottom right,
+            rgba(180,0,255,0.35),
+            transparent 70%
         );
 
     opacity: 1;
 }
 
 /* --------------------------------------------------
-   EMBER SPARKS — slow + fast, multidirectional
+   CHAOTIC SPARKS — orange + purple trails
 -------------------------------------------------- */
 .spark {
     position: fixed;
@@ -116,9 +138,23 @@ body {
     background: rgba(255,140,0,0.9);
     border-radius: 50%;
     pointer-events: none;
-    z-index: 6;
+    z-index: 7;
     filter: blur(1px);
     animation: drift var(--duration) linear infinite;
+}
+
+/* Purple ghost-trail */
+.spark::after {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(180,0,255,0.5);
+    border-radius: 50%;
+    filter: blur(4px);
+    top: -2px;
+    left: -2px;
+    opacity: 0.7;
 }
 
 @keyframes drift {
@@ -176,7 +212,7 @@ body {
 }
 
 /* --------------------------------------------------
-   Hidden message — lower-right whisper
+   Hidden message — purple halo
 -------------------------------------------------- */
 .hidden-message-container {
     position: absolute;
@@ -187,6 +223,7 @@ body {
     flex-direction: column;
     gap: 0.3rem;
     z-index: 12;
+    filter: drop-shadow(0 0 6px rgba(180,0,255,0.6));
 }
 
 /* Soft reveal + drift */
@@ -212,8 +249,8 @@ body {
 
 <body>
 
-<!-- Ember edges -->
-<div id="ember-edges"></div>
+<!-- Fractured edges -->
+<div id="fracture-edges"></div>
 
 <!-- Terminal -->
 <div id="terminal-wrapper">
@@ -310,7 +347,7 @@ function revealHiddenMessage() {
 }
 
 /* --------------------------------------------------
-   EMBER SPARK GENERATOR
+   CHAOTIC SPARK GENERATOR
 -------------------------------------------------- */
 function spawnSpark() {
     const spark = document.createElement("div");
@@ -321,15 +358,15 @@ function spawnSpark() {
     spark.style.top = Math.random() * window.innerHeight + "px";
 
     // Random drift direction
-    const dx = (Math.random() - 0.5) * 200;
-    const dy = (Math.random() - 0.5) * 200;
+    const dx = (Math.random() - 0.5) * 300;
+    const dy = (Math.random() - 0.5) * 300;
 
     spark.style.setProperty("--dx", dx + "px");
     spark.style.setProperty("--dy", dy + "px");
 
     // Random duration (slow embers + fast sparks)
     spark.style.setProperty("--duration",
-        (Math.random() * 3 + 2) + "s"
+        (Math.random() * 2 + 1.5) + "s"
     );
 
     document.body.appendChild(spark);
@@ -339,7 +376,7 @@ function spawnSpark() {
 }
 
 // Spawn sparks continuously
-setInterval(spawnSpark, 120);
+setInterval(spawnSpark, 90);
 </script>
 
 </body>
