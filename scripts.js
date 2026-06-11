@@ -104,22 +104,31 @@ function animate() {
 }
 
 // Shutdown sequence
+// 1. Shutdown animation (CRT collapse → supernova)
 function shutdownJETWORLD() {
   const overlay = document.getElementById('shutdown-overlay');
   overlay.classList.add('shutdown-active');
-
-  // Optional: fade out audio, stop animation loop, etc.
 }
+
+// 2. Blackout + redirect to VOID
+function startBlackout() {
+  const blackout = document.getElementById('blackout');
+
+  // Fade to black after shutdown animation begins
+  setTimeout(() => {
+    blackout.classList.add('active');
+  }, 800); // adjust to sync with your CRT collapse timing
+
+  // Redirect once blackout is fully opaque
+  setTimeout(() => {
+    window.location.href = "void.html"; // your second page
+  }, 2000);
+}
+
+// 3. Combined sequence on globe tap
 const globeContainer = document.getElementById('globe-container');
 
-globeContainer.addEventListener('click', shutdownJETWORLD);
-
-
-/* IF WE WANT TO REDIRECT OR LEAD INTO SOMETHING ELSE
 globeContainer.addEventListener('click', () => {
-  shutdownJETWORLD();
-  setTimeout(() => {
-    window.location.href = "nextpage.html";
-  }, 1800); // matches animation duration
+  shutdownJETWORLD();  // play CRT collapse + supernova
+  startBlackout();     // fade to black + redirect
 });
-*/

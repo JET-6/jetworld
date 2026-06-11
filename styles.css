@@ -254,3 +254,33 @@ body::before {
 .shutdown-active {
   animation: jetworld-shutdown 1.8s ease-in-out forwards;
 }
+
+/* --------------------------------------------------
+   BLACKOUT OVERLAY
+   ----------------------------------------------- */
+   /* Blackout overlay */
+#blackout {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    opacity: 0;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 1s ease-in;
+    z-index: 9999;
+}
+
+#blackout.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#blackout-text {
+    color: #00ff66;
+    font-family: "VT323", monospace;
+    font-size: 1.2rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
