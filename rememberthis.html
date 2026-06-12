@@ -33,6 +33,7 @@ body {
     font-family: "Courier New", monospace;
     color: #333;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     animation: fadeIn 2.5s ease;
@@ -43,179 +44,151 @@ body {
     100% { opacity: 1; filter: blur(0); }
 }
 
-#memory-container {
-    width: 90vw;
-    height: 90vh;
-    padding: 1rem;
-    overflow-y: hidden;
+/* Stage: single-screen theatre */
+#stage {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#ascii-scene {
     white-space: pre;
+    text-align: center;
     font-size: 1.1rem;
     line-height: 1.4;
     color: #444;
+    min-height: 7em;
+    display: inline-block;
+    animation: breathe 6s ease-in-out infinite, flicker 2.8s ease-in-out infinite;
 }
 
-/* Cinematic frame appearance */
-.ascii-frame {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 2s ease, transform 2s ease;
+@keyframes breathe {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+    100% { transform: translateY(0); }
 }
 
-.visible {
-    opacity: 1;
-    transform: translateY(0);
+@keyframes flicker {
+    0% { opacity: 0.96; }
+    50% { opacity: 1; }
+    100% { opacity: 0.96; }
 }
 
-/* Gentle character animation */
-.wiggle {
-    animation: wiggle 0.6s ease-in-out infinite alternate;
+/* Narration ribbon at bottom */
+#narration-wrapper {
+    width: 100%;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    background: rgba(255, 248, 225, 0.95);
+    overflow: hidden;
+    padding: 0.3rem 0;
 }
 
-@keyframes wiggle {
+#narration {
+    white-space: nowrap;
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 22s linear infinite;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+@keyframes marquee {
     0% { transform: translateX(0); }
-    100% { transform: translateX(2px); }
+    100% { transform: translateX(-100%); }
 }
 </style>
 </head>
 
 <body>
 
-<div id="memory-container"></div>
+<div id="stage">
+    <div id="ascii-scene"></div>
+</div>
+
+<div id="narration-wrapper">
+    <div id="narration">
+        here we are walking... running... laughing... dancing... wait—wow—here’s two more to join us—and it’s 1000% more fun
+    </div>
+</div>
 
 <script>
 /* --------------------------------------------------
-   ASCII FLASHBACK — PURE JOY (Animated)
+   ASCII MOVIE — 10-FRAME LOOP
+   running → laughing → dancing → joy burst → group
 -------------------------------------------------- */
 
-/* Each frame has two versions for character motion */
 const frames = [
+`      ᕕ( ᐛ )ᕗ
+       /|
+      / \\
 
-[
-`  \\\\o    o////
-     |    |
-    / \\  / \\
+here we are walking.`,
 
-Two figures running.`,
+`      ᕕ( ᐛ )ᕗ
+      / |
+     /  \\
 
-`  \\\\o    o////
-     |    |
-    /  \\ /  \\
+we start to run.`,
 
-Two figures running.`
-],
+`     ᕕ( ᐛ )ᕗ
+      /|
+     / \\
 
-[
-`   \\o/      \\o/
-    ( )      ( )
-    / \\      / \\
+running, a little faster now.`,
 
-They laugh as they run.`,
+`      ヽ(•‿•)ノ
+        |
+       / \\
 
-`   \\o/      \\o/
-    ( )      ( )
-    /  \\    /  \\
+we’re laughing as we move.`,
 
-They laugh as they run.`
-],
+`      ヽ(•‿•)ノ
+       \\|
+        /\\
 
-[
-`   \\o_      _o/
-     ( )    ( )
-    / >\\    /< \\
+we spin, we dance.`,
 
-They dance in circles.`,
+`     ヽ(•‿•)ノ
+        |/
+       / \\
 
-`   \\o_      _o/
-     ( )    ( )
-    /  >\\  /<  \\
+the world blurs, but we’re clear.`,
 
-They dance in circles.`
-],
+`    (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
+          |
+         / \\
 
-[
-`   \\o/   \\o/   \\o/   \\o/
-    ( )   ( )   ( )   ( )
-    / \\   / \\   / \\   / \\
+joy bursts out of us.`,
 
-And then there were four.`,
+`    (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
+   *:･ﾟ✧   *:･ﾟ✧
 
-`   \\o/   \\o/   \\o/   \\o/
-    ( )   ( )   ( )   ( )
-    /  \\  /  \\  /  \\  /  \\
+it feels like the air is sparkling.`,
 
-And then there were four.`
-],
+`*:･ﾟ✧       *:･ﾟ✧       *:･ﾟ✧       *:･ﾟ✧
+ \\(^o^)/    \\(^o^)/    \\(^o^)/    \\(^o^)/
 
-[
-`   \\o/   \\o/   \\o/   \\o/
-  ~ ( ) ~ ( ) ~ ( ) ~ ( ) ~
-    / \\   / \\   / \\   / \\
+wait—wow—here’s two more to join us.`,
 
-Joy multiplying.`,
+`*:･ﾟ✧       *:･ﾟ✧       *:･ﾟ✧       *:･ﾟ✧
+ \\(^o^)/    \\(^o^)/    \\(^o^)/    \\(^o^)/
 
-`   \\o/   \\o/   \\o/   \\o/
-  ~ ( ) ~ ( ) ~ ( ) ~ ( ) ~
-    /  \\  /  \\  /  \\  /  \\
-
-Joy multiplying.`
-],
-
-[
-`   \\o/   \\o/   \\o/   \\o/
-    ( )   ( )   ( )   ( )
- ~~/ \\~~~ / \\~~~ / \\~~~ / \\~~
-
-A memory glowing.`,
-
-`   \\o/   \\o/   \\o/   \\o/
-    ( )   ( )   ( )   ( )
- ~~/  \\~~ /  \\~~ /  \\~~ /  \\~~
-
-A memory glowing.`
-],
-
-[
-[`remember this.`,
- `you were happy here.`].join("\n")
-]
-
+and somehow it’s 1000% more fun.`
 ];
 
-let index = 0;
-const container = document.getElementById("memory-container");
+let frameIndex = 0;
+const sceneEl = document.getElementById("ascii-scene");
 
-function showNextFrame() {
-    if (index >= frames.length) return;
-
-    const frameSet = frames[index];
-
-    // Create frame element
-    const frame = document.createElement("div");
-    frame.classList.add("ascii-frame", "wiggle");
-    frame.textContent = frameSet[0];
-    container.appendChild(frame);
-
-    // Fade + slide in
-    setTimeout(() => frame.classList.add("visible"), 100);
-
-    // Auto-scroll
-    container.scrollTop = container.scrollHeight;
-
-    // If this frame has animation versions, alternate them
-    if (frameSet.length > 1) {
-        let toggle = false;
-        setInterval(() => {
-            frame.textContent = frameSet[toggle ? 0 : 1];
-            toggle = !toggle;
-        }, 500);
-    }
-
-    index++;
-    setTimeout(showNextFrame, 3000);
+function showFrame() {
+    sceneEl.textContent = frames[frameIndex];
+    frameIndex = (frameIndex + 1) % frames.length;
 }
 
-setTimeout(showNextFrame, 1200);
-
+// start the loop
+showFrame();
+setInterval(showFrame, 1200);
 </script>
 
 </body>
