@@ -119,64 +119,111 @@ body {
    running → laughing → dancing → joy burst → group
 -------------------------------------------------- */
 
-const frames = [
-`      ᕕ( ᐛ )ᕗ
-       /|
-      / \\
 
-here we are walking.`,
+const scenes = [
+`        ᕕ( ᐛ )ᕗ        ᕕ(•‿•)ᕗ
+           /|\\             /|\\
+           / \\             / \\
 
-`      ᕕ( ᐛ )ᕗ
-      / |
-     /  \\
+we are walking,
+not yet knowing we are becoming a rhythm.`,
 
-we start to run.`,
+`       ᕕ( ᐛ )ᕗ       ᕕ(•‿•)ᕗ
+          /|\\           / |\\
+          / \\            / \\
 
-`     ᕕ( ᐛ )ᕗ
-      /|
-     / \\
+we start to run,
+because something in us recognizes the road.`,
 
-running, a little faster now.`,
+`      ᕕ( ᐛ )ᕗ      ᕕ(•‿•)ᕗ
+         /|\\           /|\\
+        / \\           / \\
 
-`      ヽ(•‿•)ノ
-        |
-       / \\
+running,
+a little faster now,
+as if happiness has legs.`,
 
-we’re laughing as we move.`,
+`       \\(ᐛ )/        \\(•‿•)/
+           |                |
+          / \\             / \\
 
-`      ヽ(•‿•)ノ
-       \\|
-        /\\
+we are laughing as we move,
+and the laughter makes us lighter.`,
 
-we spin, we dance.`,
+`        ヽ( ᐛ )ノ     ヽ(•‿•)ノ
+           \\|/           \\|/
+             |              |
+            / \\           / \\
 
-`     ヽ(•‿•)ノ
-        |/
-       / \\
+we spin,
+we dance,
+we lose the map
+but not each other.`,
 
-the world blurs, but we’re clear.`,
+`       ヽ( ᐛ )ノ      ヽ(•‿•)ノ
+          \\|              | /
+            |              |
+           / \\           / \\
 
-`    (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
-          |
-         / \\
+the world blurs,
+but we are clear.`,
 
-joy bursts out of us.`,
+`    (ﾉ ᐛ )ﾉ*:･ﾟ✧   ✧ﾟ･:*ヽ(•‿•ヽ)
+        |                     |
+       / \\                  / \\
 
-`    (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
-   *:･ﾟ✧   *:･ﾟ✧
+joy bursts out of us,
+too bright to keep politely inside.`,
 
-it feels like the air is sparkling.`,
+`       *:･ﾟ✧          *:･ﾟ✧
+      \\( ᐛ )/        \\(•‿•)/
+        \\ |/           \\ | /
+           |               |
+          / \\            / \\
+
+it feels like the air is sparkling,
+like the sky has started clapping.`,
+
+`       *:･ﾟ✧          *:･ﾟ✧
+      \\( ᐛ )/        \\(•‿•)/
+        \\| /           \\ | /
+          |                |
+         / \\             / \\
+
+and for one glowing second,
+we think this is the whole miracle.`,
 
 `*:･ﾟ✧       *:･ﾟ✧       *:･ﾟ✧       *:･ﾟ✧
  \\(^o^)/    \\(^o^)/    \\(^o^)/    \\(^o^)/
+   \\| /       \\| /       \\| /       \\| /
+     |           |           |           |
+   / \\         / \\        / \\        / \\
 
-wait—wow—here’s two more to join us.`,
+wait—
+wow—
+there are two more to join us.`,
 
 `*:･ﾟ✧       *:･ﾟ✧       *:･ﾟ✧       *:･ﾟ✧
  \\(^o^)/    \\(^o^)/    \\(^o^)/    \\(^o^)/
+   \\| /       \\| /       \\| /       \\| /
+     |           |           |           |
+    / \\        / \\        / \\        / \\
 
-and somehow it’s 1000% more fun.`
+and somehow,
+what was already joy
+becomes 1000% more alive.`,
+
+`       \\(^o^)/    \\(^o^)/    \\(^o^)/    \\(^o^)/
+          \\| /       \\| /       \\| /       \\| /
+            |           |           |           |
+           / \\        / \\        / \\        / \\
+
+love was never a closed circle.
+it was a door
+with music coming through it.`
 ];
+```
+
 
 let frameIndex = 0;
 const sceneEl = document.getElementById("ascii-scene");
