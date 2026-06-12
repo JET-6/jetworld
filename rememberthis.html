@@ -54,15 +54,27 @@ body {
     color: #444;
 }
 
+/* Cinematic frame appearance */
 .ascii-frame {
     opacity: 0;
-    transition: opacity 2s ease;
+    transform: translateY(20px);
+    transition: opacity 2s ease, transform 2s ease;
 }
 
 .visible {
     opacity: 1;
+    transform: translateY(0);
 }
 
+/* Gentle character animation */
+.wiggle {
+    animation: wiggle 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes wiggle {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(2px); }
+}
 </style>
 </head>
 
@@ -72,49 +84,100 @@ body {
 
 <script>
 /* --------------------------------------------------
-   ASCII FLASHBACK — PURE JOY
+   ASCII FLASHBACK — PURE JOY (Animated)
 -------------------------------------------------- */
 
+/* Each frame has two versions for character motion */
 const frames = [
 
+[
 `  \\\\o    o////
      |    |
     / \\  / \\
-    
+
 Two figures running.`,
 
+`  \\\\o    o////
+     |    |
+    /  \\ /  \\
+
+Two figures running.`
+],
+
+[
 `   \\o/      \\o/
     ( )      ( )
     / \\      / \\
-    
+
 They laugh as they run.`,
 
+`   \\o/      \\o/
+    ( )      ( )
+    /  \\    /  \\
+
+They laugh as they run.`
+],
+
+[
 `   \\o_      _o/
      ( )    ( )
     / >\\    /< \\
-    
+
 They dance in circles.`,
 
+`   \\o_      _o/
+     ( )    ( )
+    /  >\\  /<  \\
+
+They dance in circles.`
+],
+
+[
 `   \\o/   \\o/   \\o/   \\o/
     ( )   ( )   ( )   ( )
     / \\   / \\   / \\   / \\
-    
+
 And then there were four.`,
 
 `   \\o/   \\o/   \\o/   \\o/
+    ( )   ( )   ( )   ( )
+    /  \\  /  \\  /  \\  /  \\
+
+And then there were four.`
+],
+
+[
+`   \\o/   \\o/   \\o/   \\o/
   ~ ( ) ~ ( ) ~ ( ) ~ ( ) ~
     / \\   / \\   / \\   / \\
-    
+
 Joy multiplying.`,
 
 `   \\o/   \\o/   \\o/   \\o/
+  ~ ( ) ~ ( ) ~ ( ) ~ ( ) ~
+    /  \\  /  \\  /  \\  /  \\
+
+Joy multiplying.`
+],
+
+[
+`   \\o/   \\o/   \\o/   \\o/
     ( )   ( )   ( )   ( )
  ~~/ \\~~~ / \\~~~ / \\~~~ / \\~~
-    
+
 A memory glowing.`,
 
-`remember this.
-you were happy here.`
+`   \\o/   \\o/   \\o/   \\o/
+    ( )   ( )   ( )   ( )
+ ~~/  \\~~ /  \\~~ /  \\~~ /  \\~~
+
+A memory glowing.`
+],
+
+[
+[`remember this.`,
+ `you were happy here.`].join("\n")
+]
 
 ];
 
@@ -124,16 +187,28 @@ const container = document.getElementById("memory-container");
 function showNextFrame() {
     if (index >= frames.length) return;
 
+    const frameSet = frames[index];
+
+    // Create frame element
     const frame = document.createElement("div");
-    frame.classList.add("ascii-frame");
-    frame.textContent = frames[index];
+    frame.classList.add("ascii-frame", "wiggle");
+    frame.textContent = frameSet[0];
     container.appendChild(frame);
 
-    // fade in
+    // Fade + slide in
     setTimeout(() => frame.classList.add("visible"), 100);
 
-    // auto-scroll
+    // Auto-scroll
     container.scrollTop = container.scrollHeight;
+
+    // If this frame has animation versions, alternate them
+    if (frameSet.length > 1) {
+        let toggle = false;
+        setInterval(() => {
+            frame.textContent = frameSet[toggle ? 0 : 1];
+            toggle = !toggle;
+        }, 500);
+    }
 
     index++;
     setTimeout(showNextFrame, 3000);
